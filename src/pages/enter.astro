@@ -1,71 +1,66 @@
 ---
-
-## import Layout from '../layouts/Layout.astro';
+import Layout from '../layouts/Layout.astro';
+---
 
 <Layout
-title="MovieQuiz — Discover Your Movie Character"
-description="Discover which movie character you are with MovieQuiz."
-noindex
-
+  title="MovieQuiz — Discover Your Movie Character"
+  description="Discover which movie character you are with MovieQuiz."
+  noindex
 >
-
   <main class="enter-page">
     <div class="cinema-bg"></div>
 
-```
-<div class="enter-card">
-  <div class="film-strip film-strip-top"></div>
+    <div class="enter-card">
+      <div class="film-strip film-strip-top"></div>
 
-  <div class="enter-content">
+      <div class="enter-content">
 
-    <div class="movie-icon">🎬</div>
+        <div class="movie-icon">🎬</div>
 
-    <h1>MovieQuiz</h1>
+        <h1>MovieQuiz</h1>
 
-    <p class="tagline">
-      Discover your movie character.
-    </p>
+        <p class="tagline">
+          Discover your movie character.
+        </p>
 
-    <p class="description">
-      Answer 10 questions and find out which iconic movie character
-      matches your personality.
-    </p>
+        <p class="description">
+          Answer 10 questions and find out which iconic movie character
+          matches your personality.
+        </p>
 
-    <div class="divider"></div>
+        <div class="divider"></div>
 
-    <div class="ad-label">
-      <span></span>
-      SPONSORED
-      <span></span>
-    </div>
+        <div class="ad-label">
+          <span></span>
+          SPONSORED
+          <span></span>
+        </div>
 
-    <div class="ad-container">
-      <div class="ad-placeholder">
-        <span class="ad-icon">📺</span>
-        <span>Advertisement</span>
+        <div class="ad-container">
+          <div class="ad-placeholder">
+            <span class="ad-icon">📺</span>
+            <span>Advertisement</span>
+          </div>
+        </div>
+
+        <button id="watch-ad-btn" class="primary-btn">
+          <span>▶</span>
+          WATCH AD TO TAKE THE QUIZ
+        </button>
+
+        <button id="start-btn" class="start-btn hidden">
+          START THE QUIZ
+          <span>→</span>
+        </button>
+
+        <p id="status" class="status">
+          Watch the short ad to unlock the quiz.
+        </p>
+
       </div>
+
+      <div class="film-strip film-strip-bottom"></div>
     </div>
-
-    <button id="watch-ad-btn" class="primary-btn">
-      <span>▶</span>
-      WATCH AD TO TAKE THE QUIZ
-    </button>
-
-    <button id="start-btn" class="start-btn hidden">
-      START THE QUIZ
-      <span>→</span>
-    </button>
-
-    <p id="status" class="status">
-      Watch the short ad to unlock the quiz.
-    </p>
-
-  </div>
-
-  <div class="film-strip film-strip-bottom"></div>
-</div>
-```
-
   </main>
 </Layout>
 
@@ -80,10 +75,6 @@ noindex
     if (!watchButton || !startButton || !status) return;
 
     watchButton.addEventListener('click', () => {
-      /*
-       * Open the Monetag ad only after the user explicitly clicks.
-       * This avoids opening an unwanted tab as soon as the page loads.
-       */
       try {
         window.open(AD_URL, '_blank', 'noopener,noreferrer');
       } catch (e) {}
