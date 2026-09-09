@@ -1,237 +1,372 @@
 ---
-import Layout from '../layouts/Layout.astro';
----
 
-<Layout title="MovieQuiz — Enter" description="MovieQuiz" noindex>
-  <main class="entry-page">
-    <div class="entry-card">
-      <div class="entry-glow"></div>
-      <div class="entry-content">
-        <span class="entry-emoji">🎬</span>
-        <h1 class="entry-title">MovieQuiz</h1>
-        <p class="entry-subtitle">Meet your cinematic alter ego</p>
-        <div class="entry-divider"></div>
-        <p class="entry-ad-label">Sponsored</p>
-        <div class="ad-container" id="ad-container">
-          <div class="ad-placeholder" id="ad-placeholder">
-            <div class="ad-loading-spinner"></div>
-            <p class="ad-loading-text">Loading...</p>
-          </div>
-          <iframe id="ad-frame" class="ad-frame hidden" src="" scrolling="no" frameborder="0"></iframe>
-        </div>
-        <button class="entry-continue-btn" id="continue-btn" disabled>
-          <span id="continue-text">Please wait...</span>
-        </button>
-        <p class="entry-skip-text" id="skip-text"></p>
+## import Layout from '../layouts/Layout.astro';
+
+<Layout
+title="MovieQuiz — Discover Your Movie Character"
+description="Discover which movie character you are with MovieQuiz."
+noindex
+
+>
+
+  <main class="enter-page">
+    <div class="cinema-bg"></div>
+
+```
+<div class="enter-card">
+  <div class="film-strip film-strip-top"></div>
+
+  <div class="enter-content">
+
+    <div class="movie-icon">🎬</div>
+
+    <h1>MovieQuiz</h1>
+
+    <p class="tagline">
+      Discover your movie character.
+    </p>
+
+    <p class="description">
+      Answer 10 questions and find out which iconic movie character
+      matches your personality.
+    </p>
+
+    <div class="divider"></div>
+
+    <div class="ad-label">
+      <span></span>
+      SPONSORED
+      <span></span>
+    </div>
+
+    <div class="ad-container">
+      <div class="ad-placeholder">
+        <span class="ad-icon">📺</span>
+        <span>Advertisement</span>
       </div>
     </div>
+
+    <button id="watch-ad-btn" class="primary-btn">
+      <span>▶</span>
+      WATCH AD TO TAKE THE QUIZ
+    </button>
+
+    <button id="start-btn" class="start-btn hidden">
+      START THE QUIZ
+      <span>→</span>
+    </button>
+
+    <p id="status" class="status">
+      Watch the short ad to unlock the quiz.
+    </p>
+
+  </div>
+
+  <div class="film-strip film-strip-bottom"></div>
+</div>
+```
+
   </main>
 </Layout>
 
 <script is:inline>
-  (function() {
-    var AD_URL = 'https://omg10.com/4/9027972';
-    var WAIT_SECONDS = 5;
-    var adFrame = document.getElementById('ad-frame');
-    var adPlaceholder = document.getElementById('ad-placeholder');
-    var continueBtn = document.getElementById('continue-btn');
-    var continueText = document.getElementById('continue-text');
-    var skipText = document.getElementById('skip-text');
-    var adContainer = document.getElementById('ad-container');
+  (() => {
+    const AD_URL = 'https://omg10.com/4/9027972';
 
-    // Load the ad in an iframe
-    adFrame.src = AD_URL;
-    adFrame.onload = function() {
-      adPlaceholder.classList.add('hidden');
-      adFrame.classList.remove('hidden');
-    };
+    const watchButton = document.getElementById('watch-ad-btn');
+    const startButton = document.getElementById('start-btn');
+    const status = document.getElementById('status');
 
-    // Also open the ad link in background tab
-    try {
-      window.open(AD_URL, '_blank');
-    } catch(e) {}
+    if (!watchButton || !startButton || !status) return;
 
-    // Countdown timer
-    var remaining = WAIT_SECONDS;
-    continueText.textContent = 'Please wait ' + remaining + 's...';
-    skipText.textContent = 'You can continue in ' + remaining + ' seconds';
+    watchButton.addEventListener('click', () => {
+      /*
+       * Open the Monetag ad only after the user explicitly clicks.
+       * This avoids opening an unwanted tab as soon as the page loads.
+       */
+      try {
+        window.open(AD_URL, '_blank', 'noopener,noreferrer');
+      } catch (e) {}
 
-    var timer = setInterval(function() {
-      remaining--;
-      if (remaining > 0) {
-        continueText.textContent = 'Please wait ' + remaining + 's...';
-        skipText.textContent = 'You can continue in ' + remaining + ' seconds';
-      } else {
-        clearInterval(timer);
-        continueBtn.disabled = false;
-        continueText.textContent = 'Enter MovieQuiz';
-        skipText.textContent = '';
-        continueBtn.classList.add('ready');
-      }
-    }, 1000);
+      watchButton.classList.add('hidden');
+      startButton.classList.remove('hidden');
 
-    continueBtn.addEventListener('click', function() {
-      if (this.disabled) return;
-      try { sessionStorage.setItem('mq_entered', '1'); } catch(e) {}
+      status.textContent = 'Ad opened. Ready to take the quiz?';
+
+      try {
+        sessionStorage.setItem('mq_ad_started', '1');
+      } catch (e) {}
+    });
+
+    startButton.addEventListener('click', () => {
+      try {
+        sessionStorage.setItem('mq_entered', '1');
+        sessionStorage.setItem('mq_ad_watched', '1');
+      } catch (e) {}
+
       window.location.href = '/';
     });
   })();
 </script>
 
 <style>
-  .entry-page {
+  .enter-page {
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-  }
-
-  .entry-card {
+    padding: 24px 16px;
     position: relative;
-    width: 100%;
-    max-width: 460px;
-    border-radius: var(--radius-xl);
     overflow: hidden;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    background:
+      radial-gradient(
+        circle at 50% 20%,
+        rgba(229, 9, 20, 0.14),
+        transparent 45%
+      ),
+      var(--color-bg);
   }
 
-  .entry-glow {
+  .cinema-bg {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 200px;
-    background: linear-gradient(180deg, rgba(229, 9, 20, 0.15) 0%, transparent 100%);
+    inset: 0;
     pointer-events: none;
+    opacity: 0.35;
+    background-image:
+      linear-gradient(
+        90deg,
+        transparent 49%,
+        rgba(255,255,255,0.025) 50%,
+        transparent 51%
+      );
+    background-size: 80px 80px;
   }
 
-  .entry-content {
+  .enter-card {
+    width: 100%;
+    max-width: 500px;
     position: relative;
-    padding: 40px 28px;
+    overflow: hidden;
+    border-radius: 24px;
+    background: rgba(18, 18, 18, 0.96);
+    border: 1px solid rgba(255,255,255,0.09);
+    box-shadow:
+      0 30px 90px rgba(0,0,0,0.55),
+      0 0 60px rgba(229,9,20,0.08);
+  }
+
+  .enter-content {
+    position: relative;
+    z-index: 2;
+    padding: 42px 30px 34px;
     text-align: center;
   }
 
-  .entry-emoji {
-    font-size: 3.5rem;
-    display: block;
-    margin-bottom: 16px;
+  .movie-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: linear-gradient(
+      135deg,
+      rgba(229,9,20,0.2),
+      rgba(255,152,0,0.12)
+    );
+    border: 1px solid rgba(229,9,20,0.25);
+    font-size: 2.4rem;
+    box-shadow: 0 10px 35px rgba(229,9,20,0.12);
   }
 
-  .entry-title {
-    font-size: 2.25rem;
-    margin-bottom: 8px;
-    background: linear-gradient(135deg, #e50914, #ff9800);
+  h1 {
+    margin: 0;
+    font-size: clamp(2.4rem, 9vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, #ffffff 20%, #e50914 80%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .entry-subtitle {
-    color: var(--color-text-secondary);
-    font-size: 1.125rem;
-    margin-bottom: 24px;
+  .tagline {
+    margin: 10px 0 0;
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 600;
   }
 
-  .entry-divider {
+  .description {
+    max-width: 390px;
+    margin: 12px auto 0;
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .divider {
+    width: 70px;
+    height: 3px;
+    margin: 25px auto;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #e50914, #ff9800);
+  }
+
+  .ad-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+  }
+
+  .ad-label span {
+    width: 28px;
     height: 1px;
     background: var(--color-border);
-    margin: 0 auto 24px;
-    max-width: 200px;
-  }
-
-  .entry-ad-label {
-    font-size: 0.6875rem;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 12px;
   }
 
   .ad-container {
     width: 100%;
-    height: 250px;
-    border-radius: var(--radius-lg);
+    height: 180px;
+    margin-bottom: 20px;
+    border-radius: 14px;
     overflow: hidden;
-    border: 1px solid var(--color-border);
-    margin-bottom: 28px;
-    background: var(--color-bg-secondary);
+    background:
+      linear-gradient(
+        135deg,
+        rgba(255,255,255,0.035),
+        rgba(255,255,255,0.015)
+      );
+    border: 1px solid rgba(255,255,255,0.07);
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .ad-placeholder {
-    text-align: center;
-  }
-
-  .ad-loading-spinner {
-    width: 40px;
-    height: 40px;
-    margin: 0 auto 12px;
-    border: 3px solid rgba(255, 255, 255, 0.1);
-    border-top-color: var(--color-primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  .ad-loading-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
     color: var(--color-text-muted);
-    font-size: 0.875rem;
+    font-size: 0.8rem;
   }
 
-  .ad-frame {
+  .ad-icon {
+    font-size: 2rem;
+    opacity: 0.55;
+  }
+
+  button {
+    font-family: inherit;
+  }
+
+  .primary-btn,
+  .start-btn {
     width: 100%;
-    height: 100%;
-    border: none;
-  }
-
-  .entry-continue-btn {
-    width: 100%;
-    padding: 16px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    color: var(--color-text-muted);
-    font-size: 1.125rem;
-    font-weight: 600;
-    cursor: not-allowed;
-    transition: all 0.3s ease;
-    min-height: 56px;
-  }
-
-  .entry-continue-btn.ready {
-    background: linear-gradient(135deg, #e50914, #b8060f);
-    color: white;
-    border-color: transparent;
+    min-height: 60px;
+    border: 0;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(229, 9, 20, 0.3);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
   }
 
-  .entry-continue-btn.ready:hover {
+  .primary-btn {
+    color: #fff;
+    background: linear-gradient(135deg, #e50914, #b8060f);
+    box-shadow: 0 8px 28px rgba(229,9,20,0.28);
+  }
+
+  .primary-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 30px rgba(229, 9, 20, 0.5);
+    box-shadow: 0 12px 35px rgba(229,9,20,0.4);
   }
 
-  .entry-skip-text {
-    margin-top: 14px;
-    font-size: 0.875rem;
+  .primary-btn span {
+    margin-right: 8px;
+  }
+
+  .start-btn {
+    color: #fff;
+    background: linear-gradient(135deg, #e50914, #ff3b30);
+    box-shadow: 0 8px 28px rgba(229,9,20,0.28);
+  }
+
+  .start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(229,9,20,0.4);
+  }
+
+  .start-btn span {
+    margin-left: 8px;
+    font-size: 1.2rem;
+  }
+
+  .status {
+    min-height: 20px;
+    margin: 13px 0 0;
     color: var(--color-text-muted);
+    font-size: 0.78rem;
   }
 
   .hidden {
     display: none !important;
   }
 
-  @media (max-width: 380px) {
-    .entry-content { padding: 32px 20px; }
-    .entry-title { font-size: 1.875rem; }
-    .ad-container { height: 200px; }
+  .film-strip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 7px;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.07) 0,
+        rgba(255,255,255,0.07) 18px,
+        transparent 18px,
+        transparent 30px
+      );
+  }
+
+  .film-strip-top {
+    top: 0;
+  }
+
+  .film-strip-bottom {
+    bottom: 0;
+  }
+
+  @media (max-width: 520px) {
+    .enter-page {
+      padding: 14px;
+    }
+
+    .enter-content {
+      padding: 36px 20px 30px;
+    }
+
+    .ad-container {
+      height: 150px;
+    }
+
+    .primary-btn,
+    .start-btn {
+      min-height: 56px;
+      font-size: 0.9rem;
+    }
   }
 </style>
