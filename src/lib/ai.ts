@@ -141,9 +141,25 @@ The imagePrompt should describe:
 - premium film photography
 - portrait orientation
 
-The image prompt must NOT directly include the original character name.
+Generate the character as the actual, recognizable on-screen movie character,
+not as a generic person or a loose interpretation of the archetype.
 
-Describe the character visually instead.
+Preserve the character's established appearance from the movie, including
+facial features, hairstyle, age, clothing, accessories, physical appearance,
+and overall visual identity.
+
+The generated image should clearly be recognizable as that specific movie
+character to someone familiar with the film.
+
+Do NOT replace the character with a generic person who merely resembles the
+character archetype.
+
+If the character is portrayed by a well-known actor, use the actor's
+recognizable on-screen appearance as the visual reference for the character.
+
+The character's identity is more important than creating a generic cinematic
+interpretation.
+
 
 Do NOT include:
 - text
