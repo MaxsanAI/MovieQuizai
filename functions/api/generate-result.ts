@@ -1,33 +1,34 @@
-/// <reference path="../../../types/env.d.ts" />
+/// <reference path="../../types/env.d.ts" />
 
 import {
   getQuizById,
   calculateResult,
   validateAnswers
-} from '../../../src/lib/quizEngine';
+} from '../../src/lib/quizEngine';
 
 import {
   generateTextContent,
   generateImage,
   buildImagePrompt
-} from '../../../src/lib/ai';
+} from '../../src/lib/ai';
 
-import { storeImageInR2 } from '../../../src/lib/storage';
+import { storeImageInR2 } from '../../src/lib/storage';
+
 import {
   saveResult,
   buildImageUrl
-} from '../../../src/lib/database';
+} from '../../src/lib/database';
 
 import {
   checkQuota,
   incrementQuota,
   getIdentifier
-} from '../../../src/lib/quota';
+} from '../../src/lib/quota';
 
 import {
   generateResultId,
   QUOTA_CONFIG
-} from '../../../src/config';
+} from '../../src/config';
 
 interface OnRequestContext {
   request: Request;
