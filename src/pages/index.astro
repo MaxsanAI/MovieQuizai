@@ -1,0 +1,263 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import QuizCard from '../components/QuizCard.astro';
+import { QUIZZES } from '../data/quizzes';
+import { SITE_CONFIG } from '../config';
+---
+
+<Layout title={`${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`} description={SITE_CONFIG.description}>
+  <script is:inline>
+    (function() {
+      try {
+        if (sessionStorage.getItem('mq_entered') !== '1') {
+          window.location.replace('/enter');
+        }
+      } catch(e) {}
+    })();
+  </script>
+  <Header />
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-badge">AI-Powered Movie Personality Quiz</span>
+          <h1 class="hero-title">Which Movie Character<br/>Are You?</h1>
+          <p class="hero-subtitle">Answer a few questions.<br/>Meet your cinematic alter ego.</p>
+          <a href="#quizzes" class="hero-cta">
+            <span>Discover Your Character</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <div class="hero-stats">
+            <span>{QUIZZES.length} Quizzes</span>
+            <span>Unique AI Images</span>
+            <span>Instant Results</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quizzes" id="quizzes">
+      <div class="container">
+        <h2 class="section-title">Popular Quizzes</h2>
+        <p class="section-desc">Pick a quiz, answer the questions, and get a unique AI-generated cinematic result you can share.</p>
+        <div class="quiz-grid">
+          {QUIZZES.map(quiz => <QuizCard quiz={quiz} />)}
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Pick a Quiz</h3>
+            <p>Choose from 10 movie personality quizzes — from action heroes to horror survival.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Answer Questions</h3>
+            <p>Answer 10 quick questions about how you think, act, and react to the world.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Get Your Result</h3>
+            <p>Our AI writes a personalized result and generates a unique cinematic image just for you.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Share It</h3>
+            <p>Get a unique shareable link with your result. Challenge your friends to beat your match.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    min-height: calc(100vh - 60px - 200px);
+  }
+
+  .hero {
+    padding: 60px 0 80px;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(229, 9, 20, 0.15);
+    border: 1px solid rgba(229, 9, 20, 0.3);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #f0f0f5 0%, #a0a0b0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 36px;
+    background: linear-gradient(135deg, #e50914, #b8060f);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    transition: transform var(--transition), box-shadow var(--transition);
+    box-shadow: 0 4px 24px rgba(229, 9, 20, 0.3);
+  }
+
+  .hero-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(229, 9, 20, 0.5);
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stats span {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero-stats span::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--color-primary);
+    border-radius: 50%;
+  }
+
+  .quizzes {
+    padding: 40px 0;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .section-desc {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    margin-bottom: 32px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  @media (min-width: 640px) {
+    .quiz-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .quiz-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .hero-title { font-size: 3.5rem; }
+  }
+
+  .how-it-works {
+    padding: 60px 0;
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  @media (min-width: 640px) {
+    .steps { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 900px) {
+    .steps { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .step {
+    text-align: center;
+    padding: 24px 16px;
+  }
+
+  .step-number {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e50914, #ff9800);
+    color: white;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.125rem;
+    border-radius: 50%;
+  }
+
+  .step h3 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+
+  .step p {
+    color: var(--color-text-secondary);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+</style>

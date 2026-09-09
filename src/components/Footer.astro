@@ -1,0 +1,72 @@
+---
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="footer-brand">🎬 MovieQuiz</p>
+    <p class="footer-text">Discover your cinematic alter ego. Take a quiz, get a unique AI-generated movie poster, and share your result.</p>
+    <div class="footer-links">
+      <a href="/" onclick="try{sessionStorage.setItem('mq_entered','1')}catch(e){}">Quizzes</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+    </div>
+    <p class="footer-copy">© 2026 MovieQuiz. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: auto;
+    padding: 48px 16px 32px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg-secondary);
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .footer-brand {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #e50914, #ff9800);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-text {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    max-width: 400px;
+    margin: 0 auto 24px;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    transition: color var(--transition);
+  }
+
+  .footer-links a:hover {
+    color: var(--color-text);
+  }
+
+  .footer-copy {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+  }
+</style>

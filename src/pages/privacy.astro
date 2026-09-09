@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Privacy Policy — MovieQuiz" description="Privacy Policy for MovieQuiz" noindex>
+  <Header />
+  <main class="legal-page">
+    <div class="container">
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: September 2026</p>
+
+      <h2>Overview</h2>
+      <p>MovieQuiz is designed with privacy in mind. You do not need to create an account, provide an email, or share any personal information to use our quizzes.</p>
+
+      <h2>What We Collect</h2>
+      <p>We collect minimal data necessary to operate the service:</p>
+      <ul>
+        <li><strong>Anonymous identifier:</strong> We use your IP address to enforce our daily generation limit (3 AI results per day) and prevent abuse. We do not store your full IP address permanently.</li>
+        <li><strong>Quiz answers:</strong> Your quiz answers are processed to calculate your result and are not stored separately.</li>
+        <li><strong>Generated results:</strong> Your quiz result, AI-generated text, and AI-generated image are stored so you can access and share your unique result URL.</li>
+      </ul>
+
+      <h2>What We Do Not Collect</h2>
+      <ul>
+        <li>No accounts or email addresses</li>
+        <li>No names or personal identifiers</li>
+        <li>No tracking cookies for advertising</li>
+        <li>No browsing history</li>
+      </ul>
+
+      <h2>AI Generation</h2>
+      <p>When you complete a quiz, we use Cloudflare Workers AI to generate personalized text and a unique cinematic image. Your quiz answers are sent to the AI model to generate your result. This data is processed in real-time and not retained by the AI provider beyond what is necessary for the generation.</p>
+
+      <h2>Data Storage</h2>
+      <p>Generated results are stored in Cloudflare D1 (metadata) and Cloudflare R2 (images). This includes your result text, traits, and generated image. This data is associated with a random result ID, not with your identity.</p>
+
+      <h2>Sharing</h2>
+      <p>When you share your result, the unique result URL is publicly accessible. Anyone with the link can view your result. The URL contains a random ID and does not reveal your identity.</p>
+
+      <h2>Data Retention</h2>
+      <p>Generated results are retained indefinitely so shared links continue to work. Rate limit data is retained for up to 24 hours.</p>
+
+      <h2>Children's Privacy</h2>
+      <p>MovieQuiz is not directed at children under 13. We do not knowingly collect data from children.</p>
+
+      <h2>Contact</h2>
+      <p>For privacy questions, please contact us through our website.</p>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal-page {
+    padding: 80px 0 60px;
+    min-height: calc(100vh - 60px);
+  }
+  .container {
+    max-width: 720px;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+  .updated {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 32px;
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin-top: 32px;
+    margin-bottom: 12px;
+    color: var(--color-text);
+  }
+  p {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  ul {
+    color: var(--color-text-secondary);
+    padding-left: 20px;
+    margin-bottom: 16px;
+  }
+  li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  strong {
+    color: var(--color-text);
+  }
+</style>

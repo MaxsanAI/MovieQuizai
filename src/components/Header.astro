@@ -1,0 +1,83 @@
+---
+import { SITE_CONFIG } from '../config';
+---
+
+<header class="site-header">
+  <div class="container">
+    <a href="/" class="logo" onclick="try{sessionStorage.setItem('mq_entered','1')}catch(e){}">
+      <span class="logo-icon">🎬</span>
+      <span class="logo-text">{SITE_CONFIG.name}</span>
+    </a>
+    <nav class="nav">
+      <a href="/" class="nav-link" onclick="try{sessionStorage.setItem('mq_entered','1')}catch(e){}">Quizzes</a>
+      <a href="/privacy" class="nav-link">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.02em;
+  }
+
+  .logo-icon {
+    font-size: 1.4rem;
+  }
+
+  .logo-text {
+    background: linear-gradient(135deg, #e50914, #ff9800);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav {
+    display: flex;
+    gap: 24px;
+  }
+
+  .nav-link {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color var(--transition);
+  }
+
+  .nav-link:hover {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 480px) {
+    .nav {
+      gap: 16px;
+    }
+    .logo-text {
+      font-size: 1.1rem;
+    }
+  }
+</style>

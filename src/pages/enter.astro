@@ -1,0 +1,237 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="MovieQuiz — Enter" description="MovieQuiz" noindex>
+  <main class="entry-page">
+    <div class="entry-card">
+      <div class="entry-glow"></div>
+      <div class="entry-content">
+        <span class="entry-emoji">🎬</span>
+        <h1 class="entry-title">MovieQuiz</h1>
+        <p class="entry-subtitle">Meet your cinematic alter ego</p>
+        <div class="entry-divider"></div>
+        <p class="entry-ad-label">Sponsored</p>
+        <div class="ad-container" id="ad-container">
+          <div class="ad-placeholder" id="ad-placeholder">
+            <div class="ad-loading-spinner"></div>
+            <p class="ad-loading-text">Loading...</p>
+          </div>
+          <iframe id="ad-frame" class="ad-frame hidden" src="" scrolling="no" frameborder="0"></iframe>
+        </div>
+        <button class="entry-continue-btn" id="continue-btn" disabled>
+          <span id="continue-text">Please wait...</span>
+        </button>
+        <p class="entry-skip-text" id="skip-text"></p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script is:inline>
+  (function() {
+    var AD_URL = 'https://omg10.com/4/9027972';
+    var WAIT_SECONDS = 5;
+    var adFrame = document.getElementById('ad-frame');
+    var adPlaceholder = document.getElementById('ad-placeholder');
+    var continueBtn = document.getElementById('continue-btn');
+    var continueText = document.getElementById('continue-text');
+    var skipText = document.getElementById('skip-text');
+    var adContainer = document.getElementById('ad-container');
+
+    // Load the ad in an iframe
+    adFrame.src = AD_URL;
+    adFrame.onload = function() {
+      adPlaceholder.classList.add('hidden');
+      adFrame.classList.remove('hidden');
+    };
+
+    // Also open the ad link in background tab
+    try {
+      window.open(AD_URL, '_blank');
+    } catch(e) {}
+
+    // Countdown timer
+    var remaining = WAIT_SECONDS;
+    continueText.textContent = 'Please wait ' + remaining + 's...';
+    skipText.textContent = 'You can continue in ' + remaining + ' seconds';
+
+    var timer = setInterval(function() {
+      remaining--;
+      if (remaining > 0) {
+        continueText.textContent = 'Please wait ' + remaining + 's...';
+        skipText.textContent = 'You can continue in ' + remaining + ' seconds';
+      } else {
+        clearInterval(timer);
+        continueBtn.disabled = false;
+        continueText.textContent = 'Enter MovieQuiz';
+        skipText.textContent = '';
+        continueBtn.classList.add('ready');
+      }
+    }, 1000);
+
+    continueBtn.addEventListener('click', function() {
+      if (this.disabled) return;
+      try { sessionStorage.setItem('mq_entered', '1'); } catch(e) {}
+      window.location.href = '/';
+    });
+  })();
+</script>
+
+<style>
+  .entry-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .entry-card {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+
+  .entry-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(180deg, rgba(229, 9, 20, 0.15) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .entry-content {
+    position: relative;
+    padding: 40px 28px;
+    text-align: center;
+  }
+
+  .entry-emoji {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .entry-title {
+    font-size: 2.25rem;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #e50914, #ff9800);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .entry-subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1.125rem;
+    margin-bottom: 24px;
+  }
+
+  .entry-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin: 0 auto 24px;
+    max-width: 200px;
+  }
+
+  .entry-ad-label {
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+
+  .ad-container {
+    width: 100%;
+    height: 250px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    margin-bottom: 28px;
+    background: var(--color-bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ad-placeholder {
+    text-align: center;
+  }
+
+  .ad-loading-spinner {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 12px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .ad-loading-text {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .ad-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .entry-continue-btn {
+    width: 100%;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    font-size: 1.125rem;
+    font-weight: 600;
+    cursor: not-allowed;
+    transition: all 0.3s ease;
+    min-height: 56px;
+  }
+
+  .entry-continue-btn.ready {
+    background: linear-gradient(135deg, #e50914, #b8060f);
+    color: white;
+    border-color: transparent;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(229, 9, 20, 0.3);
+  }
+
+  .entry-continue-btn.ready:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(229, 9, 20, 0.5);
+  }
+
+  .entry-skip-text {
+    margin-top: 14px;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  @media (max-width: 380px) {
+    .entry-content { padding: 32px 20px; }
+    .entry-title { font-size: 1.875rem; }
+    .ad-container { height: 200px; }
+  }
+</style>

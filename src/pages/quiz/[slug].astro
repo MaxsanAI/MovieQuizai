@@ -1,0 +1,24 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import QuizPlayer from '../../components/QuizPlayer.astro';
+import { getQuizBySlug, QUIZZES_LIST } from '../../lib/quizEngine';
+
+export function getStaticPaths() {
+  return QUIZZES_LIST.map((quiz) => ({
+    params: { slug: quiz.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const quiz = getQuizBySlug(slug || '');
+
+if (!quiz) {
+  return Astro.redirect('/');
+}
+---
+
+<Layout title={`${quiz.title} — MovieQuiz`} description={quiz.description}>
+  <Header />
+  <QuizPlayer quiz={quiz} />
+</Layout>

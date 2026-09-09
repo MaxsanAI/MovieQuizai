@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /quiz/
+Disallow: /api/
+Disallow: /result/
+
+Sitemap: https://moviequiz.example/sitemap.xml
