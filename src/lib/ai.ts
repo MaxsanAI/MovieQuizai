@@ -125,43 +125,67 @@ Return ONLY valid JSON (no markdown, no commentary) with this exact structure:
   "imagePrompt": "A detailed cinematic image prompt for a movie poster style portrait"
 }
 
-The imagePrompt must describe the same result archetype as the result.
+IMPORTANT IMAGE CHARACTER IDENTITY RULE:
 
-The imagePrompt MUST represent the user as ${gender === 'female' ? 'a female woman' : 'a male man'}.
+The imagePrompt MUST be anchored to the exact movie character named in the result:
+
+"${result.name}"
+
+The imagePrompt MUST represent the actual recognizable on-screen movie character "${result.name}".
+
+Do NOT generate a generic person.
+
+Do NOT generate a generic interpretation of the archetype.
+
+Do NOT generate a lookalike.
+
+Do NOT invent a new character.
+
+Do NOT replace "${result.name}" with another character.
+
+Do NOT turn "${result.name}" into a random male or female character.
+
+The exact character identity must remain "${result.name}".
+
+The imagePrompt MUST represent the user as ${gender === 'female' ? 'a female woman' : 'a male man'} while preserving the established identity and recognizable visual characteristics of "${result.name}".
+
+Preserve the named character's established movie appearance, including:
+
+- recognizable facial features
+- hairstyle
+- approximate age
+- clothing
+- accessories
+- body type
+- physical appearance
+- signature visual details
+- attitude
+- overall screen identity
+
+If the character is portrayed by a well-known actor, use that actor's recognizable on-screen appearance as the visual reference for the named character.
+
+The character's identity is more important than a generic cinematic interpretation.
 
 The imagePrompt should describe:
 
 - cinematic dramatic lighting
 - a strong character-focused portrait
 - movie-poster composition
-- an environment appropriate to the result
-- wardrobe appropriate to the result
+- an environment appropriate to the character
+- wardrobe appropriate to the character
 - cinematic atmosphere
 - realistic human anatomy
 - premium film photography
 - portrait orientation
+- one single main character
+- recognizable face
+- unobstructed face
+- strong cinematic composition
 
-Generate the character as the actual, recognizable on-screen movie character,
-not as a generic person or a loose interpretation of the archetype.
-
-Preserve the character's established appearance from the movie, including
-facial features, hairstyle, age, clothing, accessories, physical appearance,
-and overall visual identity.
-
-The generated image should clearly be recognizable as that specific movie
-character to someone familiar with the film.
-
-Do NOT replace the character with a generic person who merely resembles the
-character archetype.
-
-If the character is portrayed by a well-known actor, use the actor's
-recognizable on-screen appearance as the visual reference for the character.
-
-The character's identity is more important than creating a generic cinematic
-interpretation.
-
+Do not add other recognizable movie characters.
 
 Do NOT include:
+
 - text
 - logos
 - watermarks
@@ -169,6 +193,9 @@ Do NOT include:
 - interface elements
 - borders
 - captions
+- additional characters
+- collage
+- split screen
 
 Return ONLY the JSON object.`;
 }
@@ -178,6 +205,8 @@ export function buildImagePrompt(
   generatedContent: GeneratedResultContent,
   gender: Gender
 ): string {
+  const characterName = result.name;
+
   const base = result.imagePromptBase;
 
   const aiPrompt =
@@ -187,55 +216,221 @@ export function buildImagePrompt(
   const genderVisual =
     gender === 'female'
       ? `
-The main character must be clearly female.
-Create a realistic adult woman as the protagonist.
-Use feminine facial structure, feminine styling,
-and natural female anatomy.
+The user selected female.
+
+The representation must be clearly female.
+
+Create a realistic adult female representation
+while preserving the identity of the movie character
+"${characterName}".
+
+Use realistic female anatomy and natural feminine
+styling only where it does not destroy the character's
+recognizable identity.
 `
       : `
-The main character must be clearly male.
-Create a realistic adult man as the protagonist.
-Use masculine facial structure, masculine styling,
-and natural male anatomy.
+The user selected male.
+
+The representation must be clearly male.
+
+Create a realistic adult male representation
+while preserving the identity of the movie character
+"${characterName}".
+
+Use realistic male anatomy and natural masculine
+styling only where it does not destroy the character's
+recognizable identity.
 `;
 
   return `
-${aiPrompt}
+CRITICAL CHARACTER IDENTITY:
+
+The exact movie character is:
+
+"${characterName}"
+
+Generate "${characterName}" as the actual recognizable
+on-screen movie character.
+
+The character name "${characterName}" is the PRIMARY
+IDENTITY ANCHOR for this image.
+
+The generated image MUST depict "${characterName}".
+
+Do NOT replace "${characterName}" with a generic person.
+
+Do NOT replace "${characterName}" with an archetype.
+
+Do NOT create an inspired-by character.
+
+Do NOT create a lookalike.
+
+Do NOT invent a different character.
+
+Do NOT substitute another movie character.
+
+Do NOT generate multiple characters.
+
+The final image must have ONE primary character only.
+
+CHARACTER APPEARANCE:
+
+Preserve the established appearance and visual identity
+of "${characterName}" from the movie.
+
+Preserve recognizable:
+
+- facial features
+- hairstyle
+- approximate age
+- clothing
+- accessories
+- body type
+- physical appearance
+- signature details
+- attitude
+- posture
+- overall screen appearance
+
+If "${characterName}" is portrayed by a well-known actor,
+use that actor's recognizable on-screen appearance as
+the visual reference for "${characterName}".
+
+The character should be immediately recognizable to
+someone familiar with the movie.
+
+SOURCE CHARACTER DESCRIPTION:
 
 ${base}
 
+AI-GENERATED CHARACTER DESCRIPTION:
+
+${aiPrompt}
+
 ${genderVisual}
 
-The image is a premium cinematic movie poster portrait.
+IMPORTANT:
 
-The subject must be the visual embodiment of the quiz result archetype.
+The character identity must remain "${characterName}".
 
-Keep the personality, wardrobe, environment,
-attitude, mood, and cinematic identity faithful
-to the result.
+The selected gender must NOT cause the AI to replace
+the movie character with another person or character.
+
+The image should remain faithful to "${characterName}"
+while applying the selected gender presentation.
+
+The subject is one single movie character:
+
+"${characterName}"
+
+IMAGE STYLE:
+
+Premium cinematic movie poster portrait.
 
 Photorealistic cinematic photography.
+
 Dramatic studio-quality lighting.
+
 Strong contrast.
+
 Atmospheric depth.
-Detailed face.
+
+Detailed recognizable face.
+
 Natural skin texture.
-Realistic anatomy.
+
+Realistic human anatomy.
+
 Professional movie cinematography.
+
 Premium blockbuster poster composition.
+
 Portrait orientation.
 
+Strong character-focused composition.
+
+The character must be centered and clearly visible.
+
+The face must be unobstructed and recognizable.
+
+Use a cinematic environment appropriate to
+"${characterName}".
+
+Use wardrobe appropriate to
+"${characterName}".
+
+Use visual details that reinforce the established
+movie identity of "${characterName}".
+
+The background must support the character but must
+not contain another person.
+
+ONE CHARACTER ONLY.
+
+Do not add secondary people.
+
+Do not add background characters.
+
+Do not add other recognizable movie characters.
+
+Do not create a group scene.
+
+Do not create a collage.
+
+Do not create split screen.
+
+Do not create multiple versions of the character.
+
+NEGATIVE INSTRUCTIONS:
+
 No text.
+
 No title.
+
 No subtitles.
+
+No captions.
+
 No logos.
+
 No watermark.
+
 No interface.
+
 No UI.
+
 No border.
+
 No extra characters.
+
+No background people.
+
 No collage.
+
 No split screen.
+
+No duplicate character.
+
+No alternate character.
+
+No generic person.
+
+No random actor.
+
+No unrelated face.
+
+No fantasy reinterpretation unless it is part of
+the established visual identity of "${characterName}".
+
+FINAL IDENTITY CHECK:
+
+Before generating the image, prioritize this exact
+identity:
+
+"${characterName}"
+
+The final image must visually represent
+"${characterName}" as the recognizable movie character.
 `;
 }
 
@@ -345,11 +540,22 @@ export async function generateTextContent(
   // Fallback to base content
   return {
     resultTitle: result.name,
-    description: result.description,
-    traits: result.traits,
-    strength: result.strength,
-    weakness: result.weakness,
-    movieEnergy: result.movieEnergy,
+
+    description:
+      result.description,
+
+    traits:
+      result.traits,
+
+    strength:
+      result.strength,
+
+    weakness:
+      result.weakness,
+
+    movieEnergy:
+      result.movieEnergy,
+
     humorousObservation:
       result.humorousObservation,
 
