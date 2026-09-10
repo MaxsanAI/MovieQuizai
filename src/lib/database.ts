@@ -17,13 +17,26 @@ export async function saveResult(
   }
 ): Promise<void> {
   const now = new Date().toISOString();
+
   await db
     .prepare(
       `INSERT INTO results (
-        id, quiz_id, result_key, score_percentage, result_title,
-        description, traits_json, strength, weakness, movie_energy,
-        humorous_observation, share_caption, image_prompt,
-        image_url, share_image_url, created_at
+        id,
+        quiz_id,
+        result_key,
+        score_percentage,
+        result_title,
+        description,
+        traits_json,
+        strength,
+        weakness,
+        movie_energy,
+        humorous_observation,
+        share_caption,
+        image_prompt,
+        image_url,
+        share_image_url,
+        created_at
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
     .bind(
@@ -40,7 +53,7 @@ export async function saveResult(
       params.content.humorousObservation,
       params.content.shareCaption,
       params.content.imagePrompt,
-      params.imageObjectKey,
+      params.imageUrl,
       params.shareImageUrl,
       now
     )
@@ -84,8 +97,15 @@ export function parseResultRow(row: ResultRow): {
   createdAt: string;
 } {
   let traits: string[] = [];
+
   try {
-    traits = JSON.parse(row.traits_json) as string[];
+    const parsedTraits = JSON.parse(row.traits_json);
+
+    if (Array.isArray(parsedTraits)) {
+      traits = parsedTraits.filter(
+        (trait): trait is string => typeof trait === 'string'
+      );
+    }
   } catch {
     traits = [];
   }
