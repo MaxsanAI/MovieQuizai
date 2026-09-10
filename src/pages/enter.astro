@@ -36,13 +36,6 @@ import Layout from '../layouts/Layout.astro';
           <span></span>
         </div>
 
-        <div class="ad-container">
-          <div class="ad-placeholder">
-            <span class="ad-icon">📺</span>
-            <span>Advertisement</span>
-          </div>
-        </div>
-
         <button id="watch-ad-btn" class="primary-btn">
           <span>▶</span>
           WATCH AD TO TAKE THE QUIZ
@@ -72,27 +65,44 @@ import Layout from '../layouts/Layout.astro';
     const startButton = document.getElementById('start-btn');
     const status = document.getElementById('status');
 
-    if (!watchButton || !startButton || !status) return;
+    if (!watchButton || !startButton || !status) {
+      return;
+    }
 
     watchButton.addEventListener('click', () => {
       try {
-        window.open(AD_URL, '_blank', 'noopener,noreferrer');
+        window.open(
+          AD_URL,
+          '_blank',
+          'noopener,noreferrer'
+        );
       } catch (e) {}
 
       watchButton.classList.add('hidden');
       startButton.classList.remove('hidden');
 
-      status.textContent = 'Ad opened. Ready to take the quiz?';
+      status.textContent =
+        'Ad opened. Ready to take the quiz?';
 
       try {
-        sessionStorage.setItem('mq_ad_started', '1');
+        sessionStorage.setItem(
+          'mq_ad_started',
+          '1'
+        );
       } catch (e) {}
     });
 
     startButton.addEventListener('click', () => {
       try {
-        sessionStorage.setItem('mq_entered', '1');
-        sessionStorage.setItem('mq_ad_watched', '1');
+        sessionStorage.setItem(
+          'mq_entered',
+          '1'
+        );
+
+        sessionStorage.setItem(
+          'mq_ad_watched',
+          '1'
+        );
       } catch (e) {}
 
       window.location.href = '/';
@@ -110,6 +120,7 @@ import Layout from '../layouts/Layout.astro';
     padding: 24px 16px;
     position: relative;
     overflow: hidden;
+
     background:
       radial-gradient(
         circle at 50% 20%,
@@ -124,13 +135,15 @@ import Layout from '../layouts/Layout.astro';
     inset: 0;
     pointer-events: none;
     opacity: 0.35;
+
     background-image:
       linear-gradient(
         90deg,
         transparent 49%,
-        rgba(255,255,255,0.025) 50%,
+        rgba(255, 255, 255, 0.025) 50%,
         transparent 51%
       );
+
     background-size: 80px 80px;
   }
 
@@ -139,45 +152,70 @@ import Layout from '../layouts/Layout.astro';
     max-width: 500px;
     position: relative;
     overflow: hidden;
+
     border-radius: 24px;
+
     background: rgba(18, 18, 18, 0.96);
-    border: 1px solid rgba(255,255,255,0.09);
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+
     box-shadow:
-      0 30px 90px rgba(0,0,0,0.55),
-      0 0 60px rgba(229,9,20,0.08);
+      0 30px 90px rgba(0, 0, 0, 0.55),
+      0 0 60px rgba(229, 9, 20, 0.08);
   }
 
   .enter-content {
     position: relative;
     z-index: 2;
+
     padding: 42px 30px 34px;
+
     text-align: center;
   }
 
   .movie-icon {
     width: 72px;
     height: 72px;
+
     margin: 0 auto 18px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     border-radius: 20px;
-    background: linear-gradient(
-      135deg,
-      rgba(229,9,20,0.2),
-      rgba(255,152,0,0.12)
-    );
-    border: 1px solid rgba(229,9,20,0.25);
+
+    background:
+      linear-gradient(
+        135deg,
+        rgba(229, 9, 20, 0.2),
+        rgba(255, 152, 0, 0.12)
+      );
+
+    border: 1px solid rgba(229, 9, 20, 0.25);
+
     font-size: 2.4rem;
-    box-shadow: 0 10px 35px rgba(229,9,20,0.12);
+
+    box-shadow:
+      0 10px 35px rgba(229, 9, 20, 0.12);
   }
 
   h1 {
     margin: 0;
+
     font-size: clamp(2.4rem, 9vw, 3.5rem);
+
     font-weight: 800;
+
     letter-spacing: -0.04em;
-    background: linear-gradient(135deg, #ffffff 20%, #e50914 80%);
+
+    background:
+      linear-gradient(
+        135deg,
+        #ffffff 20%,
+        #e50914 80%
+      );
+
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -185,75 +223,65 @@ import Layout from '../layouts/Layout.astro';
 
   .tagline {
     margin: 10px 0 0;
+
     color: #ffffff;
+
     font-size: 1.25rem;
+
     font-weight: 600;
   }
 
   .description {
     max-width: 390px;
+
     margin: 12px auto 0;
+
     color: var(--color-text-secondary);
+
     font-size: 0.95rem;
+
     line-height: 1.6;
   }
 
   .divider {
     width: 70px;
     height: 3px;
+
     margin: 25px auto;
+
     border-radius: 10px;
-    background: linear-gradient(90deg, #e50914, #ff9800);
+
+    background:
+      linear-gradient(
+        90deg,
+        #e50914,
+        #ff9800
+      );
   }
 
   .ad-label {
     display: flex;
     align-items: center;
     justify-content: center;
+
     gap: 10px;
-    margin-bottom: 10px;
+
+    margin-bottom: 18px;
+
     color: var(--color-text-muted);
+
     font-size: 0.65rem;
+
     font-weight: 700;
+
     letter-spacing: 0.16em;
   }
 
   .ad-label span {
     width: 28px;
     height: 1px;
+
     background: var(--color-border);
-  }
-
-  .ad-container {
-    width: 100%;
-    height: 180px;
-    margin-bottom: 20px;
-    border-radius: 14px;
-    overflow: hidden;
-    background:
-      linear-gradient(
-        135deg,
-        rgba(255,255,255,0.035),
-        rgba(255,255,255,0.015)
-      );
-    border: 1px solid rgba(255,255,255,0.07);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .ad-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: var(--color-text-muted);
-    font-size: 0.8rem;
-  }
-
-  .ad-icon {
-    font-size: 2rem;
-    opacity: 0.55;
   }
 
   button {
@@ -263,13 +291,21 @@ import Layout from '../layouts/Layout.astro';
   .primary-btn,
   .start-btn {
     width: 100%;
+
     min-height: 60px;
+
     border: 0;
+
     border-radius: 14px;
+
     font-size: 1rem;
+
     font-weight: 800;
+
     letter-spacing: 0.02em;
+
     cursor: pointer;
+
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease,
@@ -277,14 +313,28 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .primary-btn {
-    color: #fff;
-    background: linear-gradient(135deg, #e50914, #b8060f);
-    box-shadow: 0 8px 28px rgba(229,9,20,0.28);
+    color: #ffffff;
+
+    background:
+      linear-gradient(
+        135deg,
+        #e50914,
+        #b8060f
+      );
+
+    box-shadow:
+      0 8px 28px rgba(229, 9, 20, 0.28);
   }
 
   .primary-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(229,9,20,0.4);
+
+    box-shadow:
+      0 12px 35px rgba(229, 9, 20, 0.4);
+  }
+
+  .primary-btn:active {
+    transform: translateY(0);
   }
 
   .primary-btn span {
@@ -292,25 +342,43 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .start-btn {
-    color: #fff;
-    background: linear-gradient(135deg, #e50914, #ff3b30);
-    box-shadow: 0 8px 28px rgba(229,9,20,0.28);
+    color: #ffffff;
+
+    background:
+      linear-gradient(
+        135deg,
+        #e50914,
+        #ff3b30
+      );
+
+    box-shadow:
+      0 8px 28px rgba(229, 9, 20, 0.28);
   }
 
   .start-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(229,9,20,0.4);
+
+    box-shadow:
+      0 12px 35px rgba(229, 9, 20, 0.4);
+  }
+
+  .start-btn:active {
+    transform: translateY(0);
   }
 
   .start-btn span {
     margin-left: 8px;
+
     font-size: 1.2rem;
   }
 
   .status {
     min-height: 20px;
+
     margin: 13px 0 0;
+
     color: var(--color-text-muted);
+
     font-size: 0.78rem;
   }
 
@@ -320,14 +388,17 @@ import Layout from '../layouts/Layout.astro';
 
   .film-strip {
     position: absolute;
+
     left: 0;
     right: 0;
+
     height: 7px;
+
     background:
       repeating-linear-gradient(
         90deg,
-        rgba(255,255,255,0.07) 0,
-        rgba(255,255,255,0.07) 18px,
+        rgba(255, 255, 255, 0.07) 0,
+        rgba(255, 255, 255, 0.07) 18px,
         transparent 18px,
         transparent 30px
       );
@@ -350,13 +421,10 @@ import Layout from '../layouts/Layout.astro';
       padding: 36px 20px 30px;
     }
 
-    .ad-container {
-      height: 150px;
-    }
-
     .primary-btn,
     .start-btn {
       min-height: 56px;
+
       font-size: 0.9rem;
     }
   }
