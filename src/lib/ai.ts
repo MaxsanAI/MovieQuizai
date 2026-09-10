@@ -12,7 +12,6 @@ type Gender = 'male' | 'female';
 function sanitizeJsonString(raw: string): string {
   let cleaned = raw.trim();
 
-  // Remove markdown code blocks
   const jsonMatch = cleaned.match(
     /```(?:json)?\s*([\s\S]*?)```/
   );
@@ -21,7 +20,6 @@ function sanitizeJsonString(raw: string): string {
     cleaned = jsonMatch[1].trim();
   }
 
-  // Find first { and last }
   const firstBrace = cleaned.indexOf('{');
   const lastBrace = cleaned.lastIndexOf('}');
 
@@ -38,10 +36,6 @@ function sanitizeJsonString(raw: string): string {
   return cleaned;
 }
 
-/**
- * Converts the internal gender value into natural
- * instructions for the AI.
- */
 function getGenderInstruction(
   gender: Gender
 ): string {
@@ -51,7 +45,7 @@ The user selected female.
 
 Personalize the result for a female user.
 Use natural female pronouns and gendered descriptions
-where grammatically appropriate.
+where appropriate.
 
 The generated movie character representation should
 be female.
@@ -66,7 +60,7 @@ The user selected male.
 
 Personalize the result for a male user.
 Use natural male pronouns and gendered descriptions
-where grammatically appropriate.
+where appropriate.
 
 The generated movie character representation should
 be male.
@@ -122,16 +116,14 @@ Return ONLY valid JSON (no markdown, no commentary) with this exact structure:
   "movieEnergy": "One phrase describing the movie energy they bring",
   "humorousObservation": "One witty observation about this personality, max 2 sentences",
   "shareCaption": "A social media caption for sharing, max 120 chars, starting with 'I got'",
-  "imagePrompt": "A detailed cinematic image prompt for a movie poster style portrait"
+  "imagePrompt": "A concise cinematic image prompt for the exact movie character"
 }
 
 IMPORTANT IMAGE CHARACTER IDENTITY RULE:
 
-The imagePrompt MUST be anchored to the exact movie character named in the result:
+The imagePrompt MUST directly include the exact movie character name "${result.name}".
 
-"${result.name}"
-
-The imagePrompt MUST represent the actual recognizable on-screen movie character "${result.name}".
+The imagePrompt must describe the actual recognizable on-screen movie character "${result.name}".
 
 Do NOT generate a generic person.
 
@@ -143,59 +135,17 @@ Do NOT invent a new character.
 
 Do NOT replace "${result.name}" with another character.
 
-Do NOT turn "${result.name}" into a random male or female character.
+Do NOT substitute another movie character.
 
-The exact character identity must remain "${result.name}".
+The character's established movie appearance must be preserved.
 
-The imagePrompt MUST represent the user as ${gender === 'female' ? 'a female woman' : 'a male man'} while preserving the established identity and recognizable visual characteristics of "${result.name}".
+Preserve recognizable facial features, hairstyle, approximate age, wardrobe, accessories, body type and signature visual details.
 
-Preserve the named character's established movie appearance, including:
+If "${result.name}" is portrayed by a well-known actor, use that actor's recognizable on-screen appearance as the visual reference.
 
-- recognizable facial features
-- hairstyle
-- approximate age
-- clothing
-- accessories
-- body type
-- physical appearance
-- signature visual details
-- attitude
-- overall screen identity
-
-If the character is portrayed by a well-known actor, use that actor's recognizable on-screen appearance as the visual reference for the named character.
-
-The character's identity is more important than a generic cinematic interpretation.
-
-The imagePrompt should describe:
-
-- cinematic dramatic lighting
-- a strong character-focused portrait
-- movie-poster composition
-- an environment appropriate to the character
-- wardrobe appropriate to the character
-- cinematic atmosphere
-- realistic human anatomy
-- premium film photography
-- portrait orientation
-- one single main character
-- recognizable face
-- unobstructed face
-- strong cinematic composition
+The image must contain ONE main character only.
 
 Do not add other recognizable movie characters.
-
-Do NOT include:
-
-- text
-- logos
-- watermarks
-- UI elements
-- interface elements
-- borders
-- captions
-- additional characters
-- collage
-- split screen
 
 Return ONLY the JSON object.`;
 }
@@ -207,231 +157,76 @@ export function buildImagePrompt(
 ): string {
   const characterName = result.name;
 
-  const base = result.imagePromptBase;
+  const trim = (
+    value: string,
+    max: number
+  ): string => {
+    return value
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, max);
+  };
 
-  const aiPrompt =
-    generatedContent.imagePrompt ||
-    base;
+  const characterDescription =
+    trim(
+      result.imagePromptBase || '',
+      350
+    );
 
-  const genderVisual =
+  const aiDescription =
+    trim(
+      generatedContent.imagePrompt || '',
+      350
+    );
+
+  const genderText =
     gender === 'female'
-      ? `
-The user selected female.
+      ? 'female'
+      : 'male';
 
-The representation must be clearly female.
+  const prompt = `Create one photorealistic cinematic movie-poster portrait of the exact movie character "${characterName}".
 
-Create a realistic adult female representation
-while preserving the identity of the movie character
-"${characterName}".
+IDENTITY:
+"${characterName}" must be the recognizable on-screen movie character, not a generic person, archetype, lookalike, invented character, or different character.
 
-Use realistic female anatomy and natural feminine
-styling only where it does not destroy the character's
-recognizable identity.
-`
-      : `
-The user selected male.
+Preserve the established appearance of "${characterName}", including recognizable facial features, hairstyle, approximate age, wardrobe, accessories, body type and signature visual details.
 
-The representation must be clearly male.
+If "${characterName}" is portrayed by a famous actor, use that actor's recognizable on-screen appearance as the visual reference.
 
-Create a realistic adult male representation
-while preserving the identity of the movie character
-"${characterName}".
+USER PRESENTATION:
+The user selected ${genderText}. Keep the recognizable identity of "${characterName}" while presenting the subject as ${genderText}.
 
-Use realistic male anatomy and natural masculine
-styling only where it does not destroy the character's
-recognizable identity.
-`;
+CHARACTER DETAILS:
+${characterDescription}
 
-  return `
-CRITICAL CHARACTER IDENTITY:
+ADDITIONAL DETAILS:
+${aiDescription}
 
-The exact movie character is:
+STYLE:
+Premium photorealistic cinematic photography, dramatic movie lighting, realistic skin texture, realistic human anatomy, strong cinematic composition, portrait orientation, centered character, unobstructed recognizable face, wardrobe and environment appropriate to "${characterName}".
 
-"${characterName}"
-
-Generate "${characterName}" as the actual recognizable
-on-screen movie character.
-
-The character name "${characterName}" is the PRIMARY
-IDENTITY ANCHOR for this image.
-
-The generated image MUST depict "${characterName}".
-
-Do NOT replace "${characterName}" with a generic person.
-
-Do NOT replace "${characterName}" with an archetype.
-
-Do NOT create an inspired-by character.
-
-Do NOT create a lookalike.
-
-Do NOT invent a different character.
-
-Do NOT substitute another movie character.
-
-Do NOT generate multiple characters.
-
-The final image must have ONE primary character only.
-
-CHARACTER APPEARANCE:
-
-Preserve the established appearance and visual identity
-of "${characterName}" from the movie.
-
-Preserve recognizable:
-
-- facial features
-- hairstyle
-- approximate age
-- clothing
-- accessories
-- body type
-- physical appearance
-- signature details
-- attitude
-- posture
-- overall screen appearance
-
-If "${characterName}" is portrayed by a well-known actor,
-use that actor's recognizable on-screen appearance as
-the visual reference for "${characterName}".
-
-The character should be immediately recognizable to
-someone familiar with the movie.
-
-SOURCE CHARACTER DESCRIPTION:
-
-${base}
-
-AI-GENERATED CHARACTER DESCRIPTION:
-
-${aiPrompt}
-
-${genderVisual}
-
-IMPORTANT:
-
-The character identity must remain "${characterName}".
-
-The selected gender must NOT cause the AI to replace
-the movie character with another person or character.
-
-The image should remain faithful to "${characterName}"
-while applying the selected gender presentation.
-
-The subject is one single movie character:
-
-"${characterName}"
-
-IMAGE STYLE:
-
-Premium cinematic movie poster portrait.
-
-Photorealistic cinematic photography.
-
-Dramatic studio-quality lighting.
-
-Strong contrast.
-
-Atmospheric depth.
-
-Detailed recognizable face.
-
-Natural skin texture.
-
-Realistic human anatomy.
-
-Professional movie cinematography.
-
-Premium blockbuster poster composition.
-
-Portrait orientation.
-
-Strong character-focused composition.
-
-The character must be centered and clearly visible.
-
-The face must be unobstructed and recognizable.
-
-Use a cinematic environment appropriate to
-"${characterName}".
-
-Use wardrobe appropriate to
-"${characterName}".
-
-Use visual details that reinforce the established
-movie identity of "${characterName}".
-
-The background must support the character but must
-not contain another person.
-
+STRICT:
 ONE CHARACTER ONLY.
 
-Do not add secondary people.
-
-Do not add background characters.
-
-Do not add other recognizable movie characters.
-
-Do not create a group scene.
-
-Do not create a collage.
-
-Do not create split screen.
-
-Do not create multiple versions of the character.
-
-NEGATIVE INSTRUCTIONS:
-
-No text.
-
-No title.
-
-No subtitles.
-
-No captions.
-
-No logos.
-
-No watermark.
-
-No interface.
-
-No UI.
-
-No border.
-
-No extra characters.
-
+No other people.
+No other movie characters.
 No background people.
-
-No collage.
-
-No split screen.
-
 No duplicate character.
-
+No collage.
+No split screen.
 No alternate character.
-
 No generic person.
-
 No random actor.
+No text.
+No title.
+No captions.
+No logos.
+No watermark.
+No UI.`;
 
-No unrelated face.
-
-No fantasy reinterpretation unless it is part of
-the established visual identity of "${characterName}".
-
-FINAL IDENTITY CHECK:
-
-Before generating the image, prioritize this exact
-identity:
-
-"${characterName}"
-
-The final image must visually represent
-"${characterName}" as the recognizable movie character.
-`;
+  return prompt
+    .trim()
+    .slice(0, 2000);
 }
 
 export async function generateTextContent(
@@ -489,14 +284,15 @@ export async function generateTextContent(
       }
 
       const jsonStr =
-        sanitizeJsonString(responseText);
+        sanitizeJsonString(
+          responseText
+        );
 
       const parsed =
         JSON.parse(
           jsonStr
         ) as GeneratedResultContent;
 
-      // Validate required fields
       if (
         !parsed.resultTitle ||
         !parsed.description ||
@@ -507,15 +303,14 @@ export async function generateTextContent(
         );
       }
 
-      // Ensure traits is an array
       if (
         !Array.isArray(parsed.traits) ||
         parsed.traits.length === 0
       ) {
-        parsed.traits = result.traits;
+        parsed.traits =
+          result.traits;
       }
 
-      // Fallback for image prompt
       if (!parsed.imagePrompt) {
         parsed.imagePrompt =
           result.imagePromptBase;
@@ -527,19 +322,23 @@ export async function generateTextContent(
       lastError = err as Error;
 
       if (
-        attempt < AI_CONFIG.maxRetries
+        attempt <
+        AI_CONFIG.maxRetries
       ) {
         await new Promise(
           (resolve) =>
-            setTimeout(resolve, 1000)
+            setTimeout(
+              resolve,
+              1000
+            )
         );
       }
     }
   }
 
-  // Fallback to base content
   return {
-    resultTitle: result.name,
+    resultTitle:
+      result.name,
 
     description:
       result.description,
@@ -579,11 +378,22 @@ export async function generateImage(
     attempt++
   ) {
     try {
+      /*
+       * Cloudflare image models enforce a maximum
+       * prompt length. Keep a final safety limit here
+       * even if another caller sends a longer prompt.
+       */
+      const safePrompt =
+        prompt.length > 2000
+          ? prompt.slice(0, 2000)
+          : prompt;
+
       const response = await ai.run(
         AI_CONFIG.imageModel,
         {
-          prompt,
-          steps: AI_CONFIG.imageSteps
+          prompt: safePrompt,
+          steps:
+            AI_CONFIG.imageSteps
         }
       );
 
@@ -620,14 +430,19 @@ export async function generateImage(
       return bytes;
 
     } catch (err) {
-      lastError = err as Error;
+      lastError =
+        err as Error;
 
       if (
-        attempt < AI_CONFIG.maxRetries
+        attempt <
+        AI_CONFIG.maxRetries
       ) {
         await new Promise(
           (resolve) =>
-            setTimeout(resolve, 1500)
+            setTimeout(
+              resolve,
+              1500
+            )
         );
       }
     }
