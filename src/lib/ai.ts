@@ -5,49 +5,47 @@ import type { Quiz, QuizResult } from './quizEngine';
 export type Gender = 'male' | 'female';
 
 export interface GeneratedTextContent {
-  title: string;
+  resultTitle: string;
   description: string;
   traits: string[];
-  strengths: string[];
-  weaknesses: string[];
-  quote: string;
+  strength: string;
+  weakness: string;
+  movieEnergy: string;
+  humorousObservation: string;
+  shareCaption: string;
 }
 
 function getGenderInstruction(gender: Gender): string {
   if (gender === 'female') {
     return `
-The user selected female.
-
-Write the result naturally for a female user.
-Use female pronouns when referring to the user.
+The user is female.
+Use natural female pronouns when referring to the USER.
 
 IMPORTANT:
-The user's gender has NO effect on the identity, sex, gender,
-appearance, or canonical characteristics of the movie character.
+The user's gender has absolutely NO effect on the movie character.
 
-Do not change, feminize, masculinize, gender-swap, or reinterpret
-the movie character because of the user's gender.
+The movie character must keep the canonical gender, sex, identity,
+appearance and personality established by the original movie.
 
-The movie character must remain exactly the established character
-from the original movie.
+Do NOT gender-swap the character.
+Do NOT feminize a male character.
+Do NOT masculinize a female character.
 `;
   }
 
   return `
-The user selected male.
-
-Write the result naturally for a male user.
-Use male pronouns when referring to the user.
+The user is male.
+Use natural male pronouns when referring to the USER.
 
 IMPORTANT:
-The user's gender has NO effect on the identity, sex, gender,
-appearance, or canonical characteristics of the movie character.
+The user's gender has absolutely NO effect on the movie character.
 
-Do not change, feminize, masculinize, gender-swap, or reinterpret
-the movie character because of the user's gender.
+The movie character must keep the canonical gender, sex, identity,
+appearance and personality established by the original movie.
 
-The movie character must remain exactly the established character
-from the original movie.
+Do NOT gender-swap the character.
+Do NOT feminize a male character.
+Do NOT masculinize a female character.
 `;
 }
 
@@ -57,53 +55,51 @@ function buildTextPrompt(
   scorePercentage: number,
   gender: Gender
 ): string {
-  const genderInstruction = getGenderInstruction(gender);
-
   return `
 You are an expert movie personality analyst.
 
-Generate a personalized movie-character result based on the quiz.
+Create a personalized movie-character quiz result.
 
 QUIZ:
 ${quiz.title}
 
-RESULT:
-Character name: ${result.name}
-Character description: ${result.description}
+CHARACTER:
+${result.name}
 
-SCORE:
+CHARACTER DESCRIPTION:
+${result.description}
+
+MATCH SCORE:
 ${scorePercentage}%
 
-${genderInstruction}
+${getGenderInstruction(gender)}
 
-CRITICAL CHARACTER IDENTITY RULE:
-The result character is "${result.name}".
+CRITICAL CHARACTER RULE:
 
-"${result.name}" is the actual movie character represented by the
-quiz result.
+The result character is exactly:
+"${result.name}"
 
-NEVER replace "${result.name}" with another character.
-NEVER change "${result.name}" into a male or female version.
-NEVER gender-swap "${result.name}".
-NEVER invent a different character.
-NEVER describe the user as literally being the actor.
-NEVER change the canonical identity of the movie character.
+"${result.name}" is the established movie character from the original movie.
 
-The selected gender belongs to the USER, not the movie character.
+NEVER replace this character with another character.
+NEVER create a gender-swapped version.
+NEVER change the character's canonical gender.
+NEVER describe a different character.
+NEVER say the user literally is the actor.
+NEVER change the character's established identity.
 
-If the movie character is female, she must remain female.
-If the movie character is male, he must remain male.
+The user's gender applies ONLY to wording about the USER.
+It does NOT apply to the movie character.
 
-Only the wording directed at the user may reflect the selected gender.
+Create writing that feels cinematic, personal, entertaining and specific.
 
-Create a result that feels personal, cinematic and specific rather
-than generic.
+Return ONLY valid JSON.
 
-Return ONLY valid JSON in exactly this structure:
+Use EXACTLY this structure:
 
 {
-  "title": "Short cinematic result title",
-  "description": "A detailed personalized description of why this user matches the character.",
+  "resultTitle": "A short cinematic result title",
+  "description": "A detailed personalized explanation of why the user matches this movie character.",
   "traits": [
     "Trait 1",
     "Trait 2",
@@ -111,24 +107,28 @@ Return ONLY valid JSON in exactly this structure:
     "Trait 4",
     "Trait 5"
   ],
-  "strengths": [
-    "Strength 1",
-    "Strength 2",
-    "Strength 3"
-  ],
-  "weaknesses": [
-    "Weakness 1",
-    "Weakness 2",
-    "Weakness 3"
-  ],
-  "quote": "A short original cinematic quote inspired by the character archetype."
+  "strength": "The user's strongest quality represented by this character.",
+  "weakness": "The user's biggest weakness represented by this character.",
+  "movieEnergy": "A short cinematic description of the energy this character represents.",
+  "humorousObservation": "A short funny but relevant observation about the user's personality match.",
+  "shareCaption": "A short social-media-friendly caption revealing the character result."
 }
 
-Do not mention this instruction.
-Do not mention that gender was collected.
-Do not mention AI.
-Do not use markdown.
-Do not add text outside the JSON.
+Rules:
+
+- resultTitle must be a string.
+- description must be a string.
+- traits must contain exactly 5 strings.
+- strength must be a string.
+- weakness must be a string.
+- movieEnergy must be a string.
+- humorousObservation must be a string.
+- shareCaption must be a string.
+- Do not return null.
+- Do not return undefined.
+- Do not omit any field.
+- Do not use markdown.
+- Do not add text outside the JSON.
 `;
 }
 
@@ -187,36 +187,72 @@ export async function generateTextContent(
 
     const parsed = JSON.parse(cleaned);
 
-    if (
-      !parsed ||
-      typeof parsed.title !== 'string' ||
-      typeof parsed.description !== 'string' ||
-      !Array.isArray(parsed.traits) ||
-      !Array.isArray(parsed.strengths) ||
-      !Array.isArray(parsed.weaknesses) ||
-      typeof parsed.quote !== 'string'
-    ) {
-      throw new Error('Invalid AI result structure');
+    const safeTraits = Array.isArray(parsed.traits)
+      ? parsed.traits.map(String).slice(0, 5)
+      : [];
+
+    while (safeTraits.length < 5) {
+      safeTraits.push('Cinematic personality');
     }
 
     return {
-      title: parsed.title,
-      description: parsed.description,
-      traits: parsed.traits.map(String).slice(0, 5),
-      strengths: parsed.strengths.map(String).slice(0, 3),
-      weaknesses: parsed.weaknesses.map(String).slice(0, 3),
-      quote: parsed.quote,
+      resultTitle:
+        typeof parsed.resultTitle === 'string'
+          ? parsed.resultTitle
+          : result.name,
+
+      description:
+        typeof parsed.description === 'string'
+          ? parsed.description
+          : result.description,
+
+      traits: safeTraits,
+
+      strength:
+        typeof parsed.strength === 'string'
+          ? parsed.strength
+          : 'Strong personality',
+
+      weakness:
+        typeof parsed.weakness === 'string'
+          ? parsed.weakness
+          : 'Can be unpredictable',
+
+      movieEnergy:
+        typeof parsed.movieEnergy === 'string'
+          ? parsed.movieEnergy
+          : 'Cinematic energy',
+
+      humorousObservation:
+        typeof parsed.humorousObservation === 'string'
+          ? parsed.humorousObservation
+          : 'You would definitely make this movie more interesting.',
+
+      shareCaption:
+        typeof parsed.shareCaption === 'string'
+          ? parsed.shareCaption
+          : `I got ${result.name} on MovieQuiz!`,
     };
   } catch (error) {
     console.error('AI text generation failed:', error);
 
     return {
-      title: result.name,
+      resultTitle: result.name,
       description: result.description,
-      traits: [],
-      strengths: [],
-      weaknesses: [],
-      quote: '',
+      traits: [
+        'Determined',
+        'Adaptable',
+        'Independent',
+        'Bold',
+        'Resilient',
+      ],
+      strength: 'Strong character and determination.',
+      weakness: 'Can sometimes take things too far.',
+      movieEnergy: 'Classic cinematic protagonist energy.',
+      humorousObservation:
+        'You probably would not survive this movie by playing it safe.',
+      shareCaption:
+        `I got ${result.name} on MovieQuiz!`,
     };
   }
 }
@@ -229,21 +265,11 @@ export function buildImagePrompt(
   const characterName = result.name;
 
   const characterDescription =
-    result.description || 'Recognizable established movie character.';
+    result.description ||
+    'Recognizable established movie character.';
 
-  const aiDescription = content.description || '';
-
-  /*
-   * IMPORTANT:
-   * Gender is intentionally NOT used here.
-   *
-   * The user may be male or female, but the image must always depict
-   * the canonical movie character returned by the quiz.
-   *
-   * Example:
-   * - User = male + Sarah Connor -> Sarah Connor remains female.
-   * - User = female + John McClane -> John McClane remains male.
-   */
+  const aiDescription =
+    content.description || '';
 
   const prompt = `Create one photorealistic cinematic movie-poster portrait of the exact movie character "${characterName}".
 
@@ -253,15 +279,15 @@ CHARACTER IDENTITY:
 The character's canonical identity MUST remain unchanged.
 
 Do NOT gender-swap the character.
-Do NOT change the character from male to female.
-Do NOT change the character from female to male.
+Do NOT change male characters into female characters.
+Do NOT change female characters into male characters.
 Do NOT create a gender-swapped version.
-Do NOT create a younger or older alternate version unless that is part of the established character identity.
 Do NOT invent a new character.
-Do NOT replace the character with the actor playing a different role.
-Do NOT create a generic person inspired by the character.
+Do NOT replace the character with another movie character.
+Do NOT create a generic person.
 
 PRESERVE THE ORIGINAL CHARACTER:
+
 Preserve the established appearance of "${characterName}", including:
 
 - canonical sex and gender
@@ -272,7 +298,7 @@ Preserve the established appearance of "${characterName}", including:
 - wardrobe
 - accessories
 - signature visual details
-- recognizable character identity
+- recognizable identity
 - appearance associated with the original movie
 
 If "${characterName}" is portrayed by a famous actor, use that actor's recognizable on-screen appearance specifically as the visual reference for this character.
@@ -284,21 +310,22 @@ RESULT CONTEXT:
 ${aiDescription}
 
 VISUAL REQUIREMENTS:
+
 Premium photorealistic cinematic photography.
 Realistic human anatomy.
 Realistic skin texture.
 Realistic facial proportions.
 Dramatic movie lighting.
 High-end theatrical movie-poster quality.
-Strong cinematic composition.
 Portrait orientation.
 Centered character.
 Full unobstructed recognizable face.
-Character should clearly look like the established movie character.
+Clearly recognizable as the established movie character.
 
 ONE CHARACTER ONLY.
 
 STRICT NEGATIVE REQUIREMENTS:
+
 No other people.
 No other movie characters.
 No background people.
@@ -365,5 +392,7 @@ export async function generateImage(
     }
   }
 
-  throw new Error('AI image generation returned an unsupported response');
+  throw new Error(
+    'AI image generation returned an unsupported response'
+  );
 }
