@@ -1,232 +1,135 @@
-/// <reference path="../../types/env.d.ts" />
-
+import type { Ai } from '@cloudflare/workers-types';
 import { AI_CONFIG } from '../config';
-import type {
-  Quiz,
-  QuizResult,
-  GeneratedResultContent
-} from '../types';
+import type { Quiz, QuizResult } from './quizEngine';
 
-type Gender = 'male' | 'female';
+export type Gender = 'male' | 'female';
 
-function sanitizeJsonString(raw: string): string {
-  let cleaned = raw.trim();
-
-  const jsonMatch = cleaned.match(
-    /```(?:json)?\s*([\s\S]*?)```/
-  );
-
-  if (jsonMatch) {
-    cleaned = jsonMatch[1].trim();
-  }
-
-  const firstBrace = cleaned.indexOf('{');
-  const lastBrace = cleaned.lastIndexOf('}');
-
-  if (
-    firstBrace !== -1 &&
-    lastBrace !== -1
-  ) {
-    cleaned = cleaned.slice(
-      firstBrace,
-      lastBrace + 1
-    );
-  }
-
-  return cleaned;
+export interface GeneratedTextContent {
+  title: string;
+  description: string;
+  traits: string[];
+  strengths: string[];
+  weaknesses: string[];
+  quote: string;
 }
 
-function getGenderInstruction(
-  gender: Gender
-): string {
+function getGenderInstruction(gender: Gender): string {
   if (gender === 'female') {
     return `
 The user selected female.
 
-Personalize the result for a female user.
-Use natural female pronouns and gendered descriptions
-where appropriate.
+Write the result naturally for a female user.
+Use female pronouns when referring to the user.
 
-The generated movie character representation should
-be female.
+IMPORTANT:
+The user's gender has NO effect on the identity, sex, gender,
+appearance, or canonical characteristics of the movie character.
 
-Do not mention that gender was collected.
-Do not explain this instruction.
+Do not change, feminize, masculinize, gender-swap, or reinterpret
+the movie character because of the user's gender.
+
+The movie character must remain exactly the established character
+from the original movie.
 `;
   }
 
   return `
 The user selected male.
 
-Personalize the result for a male user.
-Use natural male pronouns and gendered descriptions
-where appropriate.
+Write the result naturally for a male user.
+Use male pronouns when referring to the user.
 
-The generated movie character representation should
-be male.
+IMPORTANT:
+The user's gender has NO effect on the identity, sex, gender,
+appearance, or canonical characteristics of the movie character.
 
-Do not mention that gender was collected.
-Do not explain this instruction.
+Do not change, feminize, masculinize, gender-swap, or reinterpret
+the movie character because of the user's gender.
+
+The movie character must remain exactly the established character
+from the original movie.
 `;
 }
 
-export function buildTextPrompt(
+function buildTextPrompt(
   quiz: Quiz,
   result: QuizResult,
   scorePercentage: number,
   gender: Gender
 ): string {
-  const genderInstruction =
-    getGenderInstruction(gender);
+  const genderInstruction = getGenderInstruction(gender);
 
-  return `You are a witty, cinematic entertainment writer for a viral movie personality quiz platform called MovieQuiz.
+  return `
+You are an expert movie personality analyst.
 
-A user just completed the quiz "${quiz.title}" and their result is "${result.name}" with a ${scorePercentage}% match.
+Generate a personalized movie-character result based on the quiz.
 
-Result archetype: ${result.archetype}
-Base description: ${result.description}
-Base traits: ${result.traits.join(', ')}
-Base strength: ${result.strength}
-Base weakness: ${result.weakness}
-Base movie energy: ${result.movieEnergy}
-Base humorous observation: ${result.humorousObservation}
+QUIZ:
+${quiz.title}
+
+RESULT:
+Character name: ${result.name}
+Character description: ${result.description}
+
+SCORE:
+${scorePercentage}%
 
 ${genderInstruction}
 
-Write a personalized, cinematic, witty result.
+CRITICAL CHARACTER IDENTITY RULE:
+The result character is "${result.name}".
 
-Be confident, entertaining, dramatic, and social-media friendly.
+"${result.name}" is the actual movie character represented by the
+quiz result.
 
-Avoid generic AI language.
+NEVER replace "${result.name}" with another character.
+NEVER change "${result.name}" into a male or female version.
+NEVER gender-swap "${result.name}".
+NEVER invent a different character.
+NEVER describe the user as literally being the actor.
+NEVER change the canonical identity of the movie character.
 
-Make it feel like a premium movie reveal.
+The selected gender belongs to the USER, not the movie character.
 
-The result should feel specifically written for this person and their selected gender while still staying faithful to the original result archetype.
+If the movie character is female, she must remain female.
+If the movie character is male, he must remain male.
 
-Do not change the underlying movie character archetype into a different character simply because of gender.
+Only the wording directed at the user may reflect the selected gender.
 
-Return ONLY valid JSON (no markdown, no commentary) with this exact structure:
+Create a result that feels personal, cinematic and specific rather
+than generic.
+
+Return ONLY valid JSON in exactly this structure:
 
 {
-  "resultTitle": "A punchy title for the result, max 6 words",
-  "description": "2-3 sentences describing the person's movie personality in a cinematic, witty style",
-  "traits": ["trait1", "trait2", "trait3", "trait4"],
-  "strength": "One sentence about their biggest strength, cinematic style",
-  "weakness": "One sentence about their weakness, humorous style",
-  "movieEnergy": "One phrase describing the movie energy they bring",
-  "humorousObservation": "One witty observation about this personality, max 2 sentences",
-  "shareCaption": "A social media caption for sharing, max 120 chars, starting with 'I got'",
-  "imagePrompt": "A concise cinematic image prompt for the exact movie character"
+  "title": "Short cinematic result title",
+  "description": "A detailed personalized description of why this user matches the character.",
+  "traits": [
+    "Trait 1",
+    "Trait 2",
+    "Trait 3",
+    "Trait 4",
+    "Trait 5"
+  ],
+  "strengths": [
+    "Strength 1",
+    "Strength 2",
+    "Strength 3"
+  ],
+  "weaknesses": [
+    "Weakness 1",
+    "Weakness 2",
+    "Weakness 3"
+  ],
+  "quote": "A short original cinematic quote inspired by the character archetype."
 }
 
-IMPORTANT IMAGE CHARACTER IDENTITY RULE:
-
-The imagePrompt MUST directly include the exact movie character name "${result.name}".
-
-The imagePrompt must describe the actual recognizable on-screen movie character "${result.name}".
-
-Do NOT generate a generic person.
-
-Do NOT generate a generic interpretation of the archetype.
-
-Do NOT generate a lookalike.
-
-Do NOT invent a new character.
-
-Do NOT replace "${result.name}" with another character.
-
-Do NOT substitute another movie character.
-
-The character's established movie appearance must be preserved.
-
-Preserve recognizable facial features, hairstyle, approximate age, wardrobe, accessories, body type and signature visual details.
-
-If "${result.name}" is portrayed by a well-known actor, use that actor's recognizable on-screen appearance as the visual reference.
-
-The image must contain ONE main character only.
-
-Do not add other recognizable movie characters.
-
-Return ONLY the JSON object.`;
-}
-
-export function buildImagePrompt(
-  result: QuizResult,
-  generatedContent: GeneratedResultContent,
-  gender: Gender
-): string {
-  const characterName = result.name;
-
-  const trim = (
-    value: string,
-    max: number
-  ): string => {
-    return value
-      .replace(/\s+/g, ' ')
-      .trim()
-      .slice(0, max);
-  };
-
-  const characterDescription =
-    trim(
-      result.imagePromptBase || '',
-      350
-    );
-
-  const aiDescription =
-    trim(
-      generatedContent.imagePrompt || '',
-      350
-    );
-
-  const genderText =
-    gender === 'female'
-      ? 'female'
-      : 'male';
-
-  const prompt = `Create one photorealistic cinematic movie-poster portrait of the exact movie character "${characterName}".
-
-IDENTITY:
-"${characterName}" must be the recognizable on-screen movie character, not a generic person, archetype, lookalike, invented character, or different character.
-
-Preserve the established appearance of "${characterName}", including recognizable facial features, hairstyle, approximate age, wardrobe, accessories, body type and signature visual details.
-
-If "${characterName}" is portrayed by a famous actor, use that actor's recognizable on-screen appearance as the visual reference.
-
-USER PRESENTATION:
-The user selected ${genderText}. Keep the recognizable identity of "${characterName}" while presenting the subject as ${genderText}.
-
-CHARACTER DETAILS:
-${characterDescription}
-
-ADDITIONAL DETAILS:
-${aiDescription}
-
-STYLE:
-Premium photorealistic cinematic photography, dramatic movie lighting, realistic skin texture, realistic human anatomy, strong cinematic composition, portrait orientation, centered character, unobstructed recognizable face, wardrobe and environment appropriate to "${characterName}".
-
-STRICT:
-ONE CHARACTER ONLY.
-
-No other people.
-No other movie characters.
-No background people.
-No duplicate character.
-No collage.
-No split screen.
-No alternate character.
-No generic person.
-No random actor.
-No text.
-No title.
-No captions.
-No logos.
-No watermark.
-No UI.`;
-
-  return prompt
-    .trim()
-    .slice(0, 2000);
+Do not mention this instruction.
+Do not mention that gender was collected.
+Do not mention AI.
+Do not use markdown.
+Do not add text outside the JSON.
+`;
 }
 
 export async function generateTextContent(
@@ -235,7 +138,7 @@ export async function generateTextContent(
   result: QuizResult,
   scorePercentage: number,
   gender: Gender
-): Promise<GeneratedResultContent> {
+): Promise<GeneratedTextContent> {
   const prompt = buildTextPrompt(
     quiz,
     result,
@@ -243,215 +146,224 @@ export async function generateTextContent(
     gender
   );
 
-  let lastError: Error | null = null;
+  try {
+    const response = await ai.run(
+      AI_CONFIG.textModel as any,
+      {
+        messages: [
+          {
+            role: 'system',
+            content:
+              'You are a precise movie personality analyst. Return only valid JSON when JSON is requested.',
+          },
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+      } as any
+    );
 
-  for (
-    let attempt = 0;
-    attempt <= AI_CONFIG.maxRetries;
-    attempt++
-  ) {
-    try {
-      const response = await ai.run(
-        AI_CONFIG.textModel,
-        {
-          messages: [
-            {
-              role: 'system',
-              content:
-                'You are a witty cinematic entertainment writer. Return only valid JSON.'
-            },
-            {
-              role: 'user',
-              content: prompt
-            }
-          ],
-          max_tokens:
-            AI_CONFIG.textMaxTokens
-        }
-      );
+    const raw =
+      typeof response === 'string'
+        ? response
+        : (response as any)?.response ??
+          (response as any)?.result ??
+          '';
 
-      const responseText =
-        (
-          response as {
-            response?: string;
-          }
-        ).response || '';
-
-      if (!responseText) {
-        throw new Error(
-          'Empty AI text response'
-        );
-      }
-
-      const jsonStr =
-        sanitizeJsonString(
-          responseText
-        );
-
-      const parsed =
-        JSON.parse(
-          jsonStr
-        ) as GeneratedResultContent;
-
-      if (
-        !parsed.resultTitle ||
-        !parsed.description ||
-        !parsed.shareCaption
-      ) {
-        throw new Error(
-          'Missing required fields in AI response'
-        );
-      }
-
-      if (
-        !Array.isArray(parsed.traits) ||
-        parsed.traits.length === 0
-      ) {
-        parsed.traits =
-          result.traits;
-      }
-
-      if (!parsed.imagePrompt) {
-        parsed.imagePrompt =
-          result.imagePromptBase;
-      }
-
-      return parsed;
-
-    } catch (err) {
-      lastError = err as Error;
-
-      if (
-        attempt <
-        AI_CONFIG.maxRetries
-      ) {
-        await new Promise(
-          (resolve) =>
-            setTimeout(
-              resolve,
-              1000
-            )
-        );
-      }
+    if (!raw || typeof raw !== 'string') {
+      throw new Error('AI returned an empty response');
     }
+
+    let cleaned = raw.trim();
+
+    if (cleaned.startsWith('```')) {
+      cleaned = cleaned
+        .replace(/^```json\s*/i, '')
+        .replace(/^```\s*/i, '')
+        .replace(/\s*```$/i, '')
+        .trim();
+    }
+
+    const parsed = JSON.parse(cleaned);
+
+    if (
+      !parsed ||
+      typeof parsed.title !== 'string' ||
+      typeof parsed.description !== 'string' ||
+      !Array.isArray(parsed.traits) ||
+      !Array.isArray(parsed.strengths) ||
+      !Array.isArray(parsed.weaknesses) ||
+      typeof parsed.quote !== 'string'
+    ) {
+      throw new Error('Invalid AI result structure');
+    }
+
+    return {
+      title: parsed.title,
+      description: parsed.description,
+      traits: parsed.traits.map(String).slice(0, 5),
+      strengths: parsed.strengths.map(String).slice(0, 3),
+      weaknesses: parsed.weaknesses.map(String).slice(0, 3),
+      quote: parsed.quote,
+    };
+  } catch (error) {
+    console.error('AI text generation failed:', error);
+
+    return {
+      title: result.name,
+      description: result.description,
+      traits: [],
+      strengths: [],
+      weaknesses: [],
+      quote: '',
+    };
   }
+}
 
-  return {
-    resultTitle:
-      result.name,
+export function buildImagePrompt(
+  result: QuizResult,
+  content: GeneratedTextContent,
+  _gender: Gender
+): string {
+  const characterName = result.name;
 
-    description:
-      result.description,
+  const characterDescription =
+    result.description || 'Recognizable established movie character.';
 
-    traits:
-      result.traits,
+  const aiDescription = content.description || '';
 
-    strength:
-      result.strength,
+  /*
+   * IMPORTANT:
+   * Gender is intentionally NOT used here.
+   *
+   * The user may be male or female, but the image must always depict
+   * the canonical movie character returned by the quiz.
+   *
+   * Example:
+   * - User = male + Sarah Connor -> Sarah Connor remains female.
+   * - User = female + John McClane -> John McClane remains male.
+   */
 
-    weakness:
-      result.weakness,
+  const prompt = `Create one photorealistic cinematic movie-poster portrait of the exact movie character "${characterName}".
 
-    movieEnergy:
-      result.movieEnergy,
+CHARACTER IDENTITY:
+"${characterName}" must be the recognizable on-screen movie character from the original movie.
 
-    humorousObservation:
-      result.humorousObservation,
+The character's canonical identity MUST remain unchanged.
 
-    shareCaption:
-      `I got ${scorePercentage}% ${result.name} on MovieQuiz. What's your movie character?`,
+Do NOT gender-swap the character.
+Do NOT change the character from male to female.
+Do NOT change the character from female to male.
+Do NOT create a gender-swapped version.
+Do NOT create a younger or older alternate version unless that is part of the established character identity.
+Do NOT invent a new character.
+Do NOT replace the character with the actor playing a different role.
+Do NOT create a generic person inspired by the character.
 
-    imagePrompt:
-      result.imagePromptBase
-  };
+PRESERVE THE ORIGINAL CHARACTER:
+Preserve the established appearance of "${characterName}", including:
+
+- canonical sex and gender
+- recognizable facial features
+- hairstyle
+- approximate canonical age
+- body type
+- wardrobe
+- accessories
+- signature visual details
+- recognizable character identity
+- appearance associated with the original movie
+
+If "${characterName}" is portrayed by a famous actor, use that actor's recognizable on-screen appearance specifically as the visual reference for this character.
+
+CHARACTER DESCRIPTION:
+${characterDescription}
+
+RESULT CONTEXT:
+${aiDescription}
+
+VISUAL REQUIREMENTS:
+Premium photorealistic cinematic photography.
+Realistic human anatomy.
+Realistic skin texture.
+Realistic facial proportions.
+Dramatic movie lighting.
+High-end theatrical movie-poster quality.
+Strong cinematic composition.
+Portrait orientation.
+Centered character.
+Full unobstructed recognizable face.
+Character should clearly look like the established movie character.
+
+ONE CHARACTER ONLY.
+
+STRICT NEGATIVE REQUIREMENTS:
+No other people.
+No other movie characters.
+No background people.
+No duplicate character.
+No second person.
+No group.
+No collage.
+No split screen.
+No alternate character.
+No gender-swapped character.
+No generic person.
+No random actor.
+No unrelated celebrity.
+No invented character.
+No text.
+No title.
+No captions.
+No logos.
+No watermark.
+No UI.`;
+
+  return prompt.slice(0, 2000);
 }
 
 export async function generateImage(
   ai: Ai,
   prompt: string
 ): Promise<Uint8Array> {
-  let lastError: Error | null = null;
+  const response = await ai.run(
+    AI_CONFIG.imageModel as any,
+    {
+      prompt,
+    } as any
+  );
 
-  for (
-    let attempt = 0;
-    attempt <= AI_CONFIG.maxRetries;
-    attempt++
-  ) {
-    try {
-      /*
-       * Cloudflare image models enforce a maximum
-       * prompt length. Keep a final safety limit here
-       * even if another caller sends a longer prompt.
-       */
-      const safePrompt =
-        prompt.length > 2000
-          ? prompt.slice(0, 2000)
-          : prompt;
+  const result = response as any;
 
-      const response = await ai.run(
-        AI_CONFIG.imageModel,
-        {
-          prompt: safePrompt,
-          steps:
-            AI_CONFIG.imageSteps
-        }
-      );
+  if (result instanceof ArrayBuffer) {
+    return new Uint8Array(result);
+  }
 
-      const base64Image =
-        (
-          response as {
-            image?: string;
-          }
-        ).image;
+  if (result instanceof Uint8Array) {
+    return result;
+  }
 
-      if (!base64Image) {
-        throw new Error(
-          'No image in AI response'
-        );
-      }
+  if (result?.image) {
+    if (typeof result.image === 'string') {
+      const binary = atob(result.image);
+      const bytes = new Uint8Array(binary.length);
 
-      const binaryString =
-        atob(base64Image);
-
-      const bytes =
-        new Uint8Array(
-          binaryString.length
-        );
-
-      for (
-        let i = 0;
-        i < binaryString.length;
-        i++
-      ) {
-        bytes[i] =
-          binaryString.charCodeAt(i);
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
       }
 
       return bytes;
+    }
 
-    } catch (err) {
-      lastError =
-        err as Error;
+    if (result.image instanceof Uint8Array) {
+      return result.image;
+    }
 
-      if (
-        attempt <
-        AI_CONFIG.maxRetries
-      ) {
-        await new Promise(
-          (resolve) =>
-            setTimeout(
-              resolve,
-              1500
-            )
-        );
-      }
+    if (result.image instanceof ArrayBuffer) {
+      return new Uint8Array(result.image);
     }
   }
 
-  throw (
-    lastError ||
-    new Error(
-      'Image generation failed'
-    )
-  );
+  throw new Error('AI image generation returned an unsupported response');
 }
