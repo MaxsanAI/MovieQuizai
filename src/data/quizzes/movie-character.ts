@@ -275,7 +275,7 @@ export const movieCharacterQuiz: Quiz = {
       humorousObservation:
         "Your best ideas happen when you're supposed to be somewhere else entirely.",
       imagePromptBase:
-        'Two women in a convertible driving through desert landscape, wind in hair, golden sunset, freedom and adventure, cinematic road movie aesthetic',
+        'Thelma, a single woman in a vintage convertible driving alone through an open desert landscape, wind in her hair, golden sunset, expressive determined face, freedom and adventure, cinematic road movie aesthetic, one character only',
     },
     {
       key: 'neo',
@@ -294,3 +294,5 @@ export const movieCharacterQuiz: Quiz = {
     },
   ],
 };
+
+
