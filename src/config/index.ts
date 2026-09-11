@@ -1,4 +1,4 @@
-```ts
+
 export const SITE_CONFIG = {
   name: 'MovieQuiz',
   tagline: 'Meet your cinematic alter ego',
@@ -48,4 +48,4 @@ export function generateResultId(): string {
 export function isValidResultId(id: string): boolean {
   return /^[a-z0-9]{10}$/.test(id);
 }
-```
+
