@@ -187,9 +187,9 @@ export const movieVillainQuiz: Quiz = {
       weakness: "You destroy what you can't control",
       movieEnergy: 'Controlled chaos with a punchline',
       humorousObservation:
-        'You think the real joke is that everyone else is following rules that don\'t exist.',
+        'You think the real joke is that everyone else is following rules that don\\'t exist.',
       imagePromptBase:
-        'A theatrical figure with painted grin in a dimly lit room, playing cards scattered, green and purple tones, cinematic villain portrait, dramatic shadows',
+        'Create the exact movie character The Joker as portrayed by Heath Ledger in The Dark Knight (2008). Adult white male, lean build, pale white makeup, heavily smeared black eye makeup, scarred red Glasgow-smile makeup, messy medium-length dirty green hair, intense blue-green eyes, recognizable Heath Ledger facial structure, wearing the authentic worn purple coat and dark vest/shirt from The Dark Knight. Dark Gotham City atmosphere, gritty 2008 crime-thriller cinematography, realistic practical makeup, dramatic cinematic lighting. ONE PERSON ONLY. Exact Heath Ledger Joker, not Joaquin Phoenix Joker, not Jack Nicholson Joker, not a generic clown, not a random actor, not an invented villain, no other people.',
     },
     {
       key: 'darth-vader',
@@ -204,14 +204,14 @@ export const movieVillainQuiz: Quiz = {
       humorousObservation:
         "You've force-choked someone for incompetence and honestly considered it a team-building exercise.",
       imagePromptBase:
-        'A dark armored figure with cape in a futuristic corridor, red light reflections, imposing silhouette, cinematic sci-fi villain portrait, dramatic lighting',
+        'Create the exact movie character Darth Vader from the original Star Wars trilogy, especially The Empire Strikes Back (1980) and Return of the Jedi (1983). Tall imposing human male completely enclosed in authentic black Darth Vader armor, iconic black helmet and triangular mouth grille, black cape, chest control panel, armored gloves, heavy black boots, unmistakable original trilogy costume design. Black mechanical armor should look physical and practical, not futuristic generic armor. Dark Imperial Star Destroyer interior, subtle red and white practical lighting, cinematic 1970s/1980s Star Wars visual style. ONE PERSON ONLY. Exact original-trilogy Darth Vader, not Kylo Ren, not a generic armored villain, not a random character, no other people, no stormtroopers.',
     },
     {
       key: 'hannibal-lecter',
       name: 'Hannibal Lecter',
       archetype: 'The Cultured Predator',
       description:
-        'You possess refined taste and a brilliant mind. You see through everyone\'s pretenses with unsettling clarity.',
+        'You possess refined taste and a brilliant mind. You see through everyone\\'s pretenses with unsettling clarity.',
       traits: ['Sophisticated', 'Brilliant', 'Manipulative', 'Refined'],
       strength: 'You understand people better than they understand themselves',
       weakness: 'You view others as either interesting or boring',
@@ -219,7 +219,7 @@ export const movieVillainQuiz: Quiz = {
       humorousObservation:
         "You pair your wine with something questionable and still get compliments on your hosting.",
       imagePromptBase:
-        'A refined man in a suit at an elegant dining table, dim candlelight, classical art on walls, psychological thriller aesthetic, cinematic portrait',
+        'Create the exact movie character Dr. Hannibal Lecter as portrayed by Anthony Hopkins in The Silence of the Lambs (1991). Adult white male in his 50s, pale complexion, intelligent penetrating blue eyes, short neatly combed dark brown hair with subtle gray, distinctive Anthony Hopkins facial structure, calm controlled expression, refined elegant posture. Authentic Hannibal Lecter appearance from the film: restrained prison clothing or sophisticated dark suit, immaculate and understated. Psychological thriller atmosphere, stark institutional prison setting, cold cinematic lighting, realistic 1991 film aesthetic. ONE MAN ONLY. Exact Anthony Hopkins Hannibal Lecter, not Mads Mikkelsen, not a generic serial killer, not a generic businessman, not another actor, no other people.',
     },
     {
       key: 'voldemort',
@@ -234,7 +234,7 @@ export const movieVillainQuiz: Quiz = {
       humorousObservation:
         'You have serious commitment issues — specifically, to your own nose.',
       imagePromptBase:
-        'A pale serpentine figure in dark robes, dimly lit stone chamber, fog and shadow, dark fantasy aesthetic, cinematic villain portrait',
+        'Create the exact movie character Lord Voldemort as portrayed by Ralph Fiennes in the Harry Potter films, especially Harry Potter and the Goblet of Fire (2005). Tall thin adult male wizard with extremely pale corpse-like skin, completely hairless head, flattened snake-like nose with narrow slits instead of a normal human nose, red-tinged eyes, thin lips, long skeletal fingers, sinister expression, recognizable Ralph Fiennes facial structure transformed by Voldemort makeup and prosthetics. Authentic long black wizard robes, dark magical atmosphere, Hogwarts-era dark stone interior, subtle green magical light. Photorealistic cinematic fantasy, practical prosthetic detail. ONE PERSON ONLY. Exact Ralph Fiennes Voldemort, not a generic wizard, not a normal bald man, not another Harry Potter character, no other people.',
     },
     {
       key: 'nurse-ratched',
@@ -249,7 +249,7 @@ export const movieVillainQuiz: Quiz = {
       humorousObservation:
         "You've made people feel guilty for breathing too loudly, and you enjoyed it.",
       imagePromptBase:
-        'A stern woman in a crisp uniform in a clinical institution corridor, cold fluorescent lighting, unsettling calm, psychological drama aesthetic',
+        'Create the exact movie character Nurse Mildred Ratched as portrayed by Louise Fletcher in One Flew Over the Cuckoo\\'s Nest (1975). Adult white woman in her 40s, composed symmetrical face, pale complexion, cool blue eyes, neatly styled short light-brown to auburn hair, controlled expression, unmistakable Louise Fletcher appearance. Authentic 1960s psychiatric hospital nurse uniform: crisp white nurse dress, white cardigan or medical attire, modest professional styling. Sterile psychiatric ward corridor, muted institutional colors, soft but unsettling fluorescent lighting, realistic 1975 film aesthetic. ONE WOMAN ONLY. Exact Louise Fletcher Nurse Ratched, not a generic nurse, not a modern nurse, not another actress, no patients, no other people.',
     },
     {
       key: 'hans-gruber',
@@ -264,7 +264,7 @@ export const movieVillainQuiz: Quiz = {
       humorousObservation:
         "You've delivered a monologue mid-heist and still hit your deadline.",
       imagePromptBase:
-        'A well-dressed man in a skyscraper, city lights behind, calculating expression, action thriller aesthetic, cinematic villain portrait, cool blue tones',
+        'Create the exact movie character Hans Gruber as portrayed by Alan Rickman in Die Hard (1988). Adult white German male in his 40s, slim elegant build, pale complexion, sharp intelligent facial features, piercing blue eyes, dark neatly styled hair, recognizable Alan Rickman face, calm sophisticated expression. Authentic Hans Gruber wardrobe: impeccably tailored charcoal or dark gray suit, crisp dress shirt, elegant tie, expensive understated clothing. Inside the Nakatomi Plaza skyscraper in Los Angeles, nighttime city lights through large windows, sophisticated 1980s action-thriller cinematography. ONE MAN ONLY. Exact Alan Rickman Hans Gruber, not Severus Snape, not a generic businessman, not a generic terrorist, not another actor, no other people.',
     },
     {
       key: 'anton-chigurh',
@@ -279,7 +279,7 @@ export const movieVillainQuiz: Quiz = {
       humorousObservation:
         "You've asked someone to call a coin toss and they didn't find it nearly as fun as you did.",
       imagePromptBase:
-        'A man with a bowl cut holding a coin, dusty Texas landscape, harsh sunlight, neo-western thriller aesthetic, unsettling cinematic portrait',
+        'Create the exact movie character Anton Chigurh as portrayed by Javier Bardem in No Country for Old Men (2007). Adult Spanish male in his late 40s, tall lean build, pale weathered complexion, distinctive severe bowl haircut with straight dark brown hair, dark brown eyes, broad angular face, recognizable Javier Bardem facial structure, expressionless unsettling stare. Authentic dark 1970s-style clothing, dusty brown or dark jacket, shirt and trousers. West Texas landscape, roadside or motel atmosphere, harsh natural sunlight, muted earthy colors, neo-western crime-thriller cinematography. A small coin may be present in one hand. ONE MAN ONLY. Exact Javier Bardem Anton Chigurh, not a generic cowboy, not a generic hitman, not another actor, no other people.',
     },
     {
       key: 'maleficent',
@@ -294,7 +294,7 @@ export const movieVillainQuiz: Quiz = {
       humorousObservation:
         'You showed up uninvited and somehow made the whole party about you. Iconic.',
       imagePromptBase:
-        'A towering fairy figure with dark wings, thorns and green flames, gothic castle backdrop, dark fantasy aesthetic, cinematic dramatic portrait',
+        'Create the exact movie character Maleficent as portrayed by Angelina Jolie in Maleficent (2014). Adult white woman with extremely distinctive Angelina Jolie facial features, high sculpted cheekbones, sharp jawline, pale skin, intense green eyes, full lips, elegant sinister expression. Large black curved ram-like horns emerging from her head, long black cloak and gothic medieval-fantasy costume, enormous dark wings behind her, sophisticated dark fairy design from the 2014 film. Enchanted dark forest or gothic fantasy kingdom, subtle green magical glow, cinematic fantasy lighting, highly detailed realistic costume and makeup. ONE WOMAN ONLY. Exact Angelina Jolie Maleficent, not a generic witch, not a generic fairy, not another actress, no other people.',
     },
   ],
 };
