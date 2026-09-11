@@ -187,7 +187,7 @@ export const movieCharacterQuiz: Quiz = {
       humorousObservation:
         'You probably have a specific set of skills, and yes, people keep finding out about them.',
       imagePromptBase:
-        'A lone figure in a dark tailored suit standing in rain, neon city reflections, cinematic dramatic lighting, moody atmosphere, sharp contrast, film still aesthetic',
+        'JOHN WICK — specifically the John Wick film portrayal played by Keanu Reeves. Recreate the recognizable on-screen appearance of the character, not a generic male assassin. Adult man in his mid-to-late 40s, lean athletic build, pale/light complexion, angular masculine face, dark brown almost black medium-length hair parted naturally and slightly falling around the sides of the face, distinctive short full dark beard and mustache, serious emotionally restrained expression, intense dark eyes. He wears the iconic fitted black tailored three-piece suit or black tactical suit, crisp white dress shirt, black tie, polished black leather dress shoes. His appearance must clearly evoke the modern John Wick films: elegant assassin styling, slightly weathered face, controlled posture, understated professional appearance. If a weapon is visible, keep it secondary and unobtrusive. One person only, full recognizable character identity, no generic businessman, no random model, no unrelated celebrity. Photorealistic cinematic film still, realistic human anatomy, authentic movie wardrobe, dramatic practical lighting, subtle dark neo-noir atmosphere.',
     },
     {
       key: 'indiana-jones',
@@ -202,7 +202,7 @@ export const movieCharacterQuiz: Quiz = {
       humorousObservation:
         "You've probably complained about snakes on a plane, a bus, and definitely in a pit.",
       imagePromptBase:
-        'An adventurer in a fedora and leather jacket, dusty desert canyon, golden hour light, ancient ruins, cinematic adventure aesthetic',
+        'INDIANA JONES — specifically the classic film portrayal played by Harrison Ford, especially the Raiders of the Lost Ark / Indiana Jones trilogy appearance. Recreate the recognizable movie character, not a generic adventurer. Adult white man in his late 30s to 40s, rugged athletic build, strong square masculine face, slightly weathered skin, dark brown medium-length hair brushed back with natural volume, thick dark eyebrows, clean-shaven or very light stubble depending on scene. Iconic brown leather fedora with a wide brim, worn brown leather jacket, light khaki button-up shirt, dark brown trousers, leather shoulder satchel crossing the torso, sturdy brown leather boots. His signature bullwhip may be attached at his side or held naturally, but it must not obscure his face. Adventurous archaeologist appearance, dusty clothing and subtle signs of travel. One person only, recognizable Harrison Ford-era Indiana Jones silhouette and wardrobe, no generic cowboy, no modern explorer, no other characters. Photorealistic cinematic adventure film still, authentic 1930s-inspired costume, realistic proportions, warm natural light, dusty archaeological environment.',
     },
     {
       key: 'elle-woods',
@@ -216,7 +216,7 @@ export const movieCharacterQuiz: Quiz = {
       movieEnergy: 'Pink power with a Harvard-degree punch',
       humorousObservation: 'You could win any argument while doing bend and snap.',
       imagePromptBase:
-        'A confident young woman in pink surrounded by books and legal documents, bright campus setting, empowering cinematic portrait, warm lighting',
+        'ELLE WOODS — specifically Reese Witherspoon as Elle Woods in Legally Blonde (2001). Recreate the recognizable film character, not a generic blonde woman. Young adult white woman in her early 20s, petite slim build, fair skin, heart-shaped feminine face, bright expressive blue eyes, small nose, youthful features, long straight glossy golden-blonde hair styled neatly with a center or soft side part. Polished glamorous appearance. She wears fashionable early-2000s feminine clothing dominated by vivid pink: fitted pink blazer or cardigan, coordinated pink top or dress, tasteful accessories, manicured appearance. Include a subtle legal/student context such as Harvard law books, but keep Elle herself as the unmistakable focal point. Her expression should be confident, intelligent, upbeat and slightly playful. One person only, no generic fashion model, no unrelated blonde celebrity, no modern influencer aesthetic. Photorealistic cinematic film still, authentic Legally Blonde-era styling, realistic face and hair, bright polished lighting, pink visual identity.',
     },
     {
       key: 'ferris-bueller',
@@ -230,7 +230,7 @@ export const movieCharacterQuiz: Quiz = {
       movieEnergy: 'Joyful rebellion with a killer soundtrack',
       humorousObservation: "You've never missed a parade you couldn't crash.",
       imagePromptBase:
-        'A young man on a float in a city parade, sunny day, joyful expression, vibrant colors, cinematic comedy aesthetic, golden hour',
+        'FERRIS BUELLER — specifically Matthew Broderick as Ferris Bueller in Ferris Bueller’s Day Off (1986). Recreate the recognizable film character, not a generic young man. Teenaged white male, slim average build, youthful clean-cut face, fair/light complexion, dark brown short neatly styled hair with natural volume, expressive brown eyes, confident mischievous smile. Iconic 1980s Ferris styling: relaxed white shirt or patterned short-sleeve shirt layered under a casual jacket, distinctive casual 1980s clothing, youthful polished appearance. He should look charming, carefree and playfully confident rather than like a modern teenager. A classic Chicago setting or parade atmosphere can appear in the background, but Ferris must remain the single clear subject. One person only, no Cameron, no Sloane, no crowd surrounding him, no generic model. Photorealistic cinematic comedy film still, authentic 1980s color and wardrobe, realistic youthful facial proportions, joyful mischievous expression.',
     },
     {
       key: 'katniss-everdeen',
@@ -245,7 +245,7 @@ export const movieCharacterQuiz: Quiz = {
       humorousObservation:
         "You volunteer for things you absolutely did not want to do, and somehow that's your whole personality now.",
       imagePromptBase:
-        'A young woman with a bow in a forest, dystopian arena, dramatic sky, fiery cinematic lighting, heroic portrait',
+        'KATNISS EVERDEEN — specifically Jennifer Lawrence as Katniss in The Hunger Games film series. Recreate the recognizable movie character, not a generic female archer. Young adult white woman around 17–20, athletic lean build, light olive/fair complexion, strong determined oval face, gray-blue eyes, straight dark brown hair usually worn in her iconic long side braid, natural eyebrows, minimal makeup, practical rugged appearance. She wears the recognizable District 12 / Hunger Games styling: dark fitted survival clothing, practical jacket or arena outfit, sturdy boots, muted earthy colors. Her signature recurve bow and arrows may be present and naturally held or carried. Include subtle details associated with the Hunger Games world, but do not turn her into a generic fantasy warrior. Her expression should be focused, guarded and quietly defiant. One person only, no Peeta, no Gale, no other tributes, no crowd. Photorealistic cinematic film still, realistic Jennifer Lawrence-era facial appearance, authentic dystopian costume, natural skin texture, dramatic but believable lighting.',
     },
     {
       key: 'sherlock-holmes',
@@ -260,7 +260,7 @@ export const movieCharacterQuiz: Quiz = {
       humorousObservation:
         "You've deduced someone's entire life story from their shoelaces. Twice. Today.",
       imagePromptBase:
-        'A detective in a dark coat examining evidence, foggy Victorian London street, gaslight glow, moody cinematic atmosphere, sharp focus',
+        'SHERLOCK HOLMES — specifically Robert Downey Jr. as Sherlock Holmes in the Guy Ritchie Sherlock Holmes films (2009 and 2011). Recreate this exact cinematic interpretation, not a generic detective and not the Benedict Cumberbatch television version. Adult white British man in his late 30s to early 40s, slim athletic build, pale complexion, narrow angular face, sharp cheekbones, intense light-colored eyes, dark brown wavy medium-length hair, slightly unkempt but deliberate Victorian styling, subtle facial stubble. Wear authentic late-19th-century London clothing associated with Robert Downey Jr.’s version: dark Victorian suit, waistcoat, white shirt, dark tie or cravat, long dark overcoat, period-appropriate details. His expression should be intensely analytical, eccentric and confident. Optional subtle detective props such as a magnifying glass or notebook, but no other people. One person only, unmistakably Robert Downey Jr.’s Sherlock Holmes, not a generic Victorian detective. Photorealistic cinematic film still, gritty Victorian London atmosphere, period-authentic wardrobe, dramatic gaslight, realistic anatomy and facial detail.',
     },
     {
       key: 'thelma',
@@ -275,7 +275,7 @@ export const movieCharacterQuiz: Quiz = {
       humorousObservation:
         "Your best ideas happen when you're supposed to be somewhere else entirely.",
       imagePromptBase:
-        'Thelma, a single woman in a vintage convertible driving alone through an open desert landscape, wind in her hair, golden sunset, expressive determined face, freedom and adventure, cinematic road movie aesthetic, one character only',
+        'THELMA DICKINSON — specifically Geena Davis as Thelma in Thelma & Louise (1991). Recreate the recognizable film character, not a generic woman driving a car. Young adult white woman in her late 20s to early 30s, slim average build, fair complexion, expressive youthful face, large expressive eyes, soft feminine facial features, medium-to-long light brown hair with natural volume, casual early-1990s appearance. She wears the recognizable casual road-trip clothing from the film: practical denim or casual shirt, light-colored top, jeans, simple accessories, natural makeup. She is adventurous but initially somewhat innocent, with an increasingly confident and liberated expression. If a car appears, use a classic early-1990s vintage Ford Thunderbird convertible associated with the film, but Thelma must remain the single visual focus. One woman only, no Louise, no second person, no crowd. Photorealistic cinematic road-movie film still, authentic early-1990s styling, realistic skin and hair, warm desert sunlight, open American highway atmosphere.',
     },
     {
       key: 'neo',
@@ -290,9 +290,7 @@ export const movieCharacterQuiz: Quiz = {
       humorousObservation:
         "You've taken both pills simultaneously because commitment is hard.",
       imagePromptBase:
-        'A figure in a long black coat in a rain-soaked city, green digital code reflections, cinematic sci-fi atmosphere, dramatic lighting',
+        'NEO — specifically Keanu Reeves as Neo in The Matrix (1999). Recreate the recognizable movie character, not a generic cyberpunk man. Adult male in his late 20s to early 30s, slim athletic build, pale/light complexion, angular oval face, strong jawline, dark brown eyes, straight dark brown medium-length hair parted naturally and falling slightly over the forehead, clean-shaven face. Iconic Matrix appearance: long black leather coat, black shirt, black trousers, black boots, narrow dark sunglasses when appropriate, minimalist futuristic styling. His expression should be calm, serious, introspective and determined. Use subtle green-tinted Matrix atmosphere or rain-soaked urban architecture, but do not turn the image into a generic cyberpunk character. One person only, no Trinity, no Morpheus, no agents, no crowd. Photorealistic cinematic film still, recognizable Keanu Reeves-era Neo appearance, authentic 1999 Matrix wardrobe, realistic facial features, dramatic controlled lighting, subtle green digital atmosphere.',
     },
   ],
 };
-
-
