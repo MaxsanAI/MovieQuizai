@@ -81,12 +81,10 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (
   const gender = body.gender;
   const answers = body.answers;
 
-  // Validate quiz ID
   if (!quizId || typeof quizId !== 'string') {
     return jsonError(400, 'Quiz ID is required');
   }
 
-  // Validate gender
   if (
     gender !== 'male' &&
     gender !== 'female'
@@ -97,7 +95,6 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (
     );
   }
 
-  // Validate answers
   if (!answers || typeof answers !== 'object') {
     return jsonError(400, 'Answers are required');
   }
@@ -115,7 +112,6 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (
     );
   }
 
-  // Check quota before expensive AI generation
   const identifier = getIdentifier(request);
 
   const quotaCheck = await checkQuota(
@@ -130,7 +126,6 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (
     );
   }
 
-  // Calculate quiz result
   const scoreResult = calculateResult(
     quiz,
     answers
@@ -148,12 +143,6 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (
 
   while (attempts < 5) {
     try {
-      /*
-       * Generate the personalized text result.
-       *
-       * Gender is passed directly to the AI prompt so
-       * pronouns and character presentation can be adapted.
-       */
       const content = await generateTextContent(
         env.AI,
         quiz,
@@ -162,47 +151,50 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (
         gender as Gender
       );
 
-      /*
-       * Build the final image prompt using both the
-       * quiz result and selected gender.
-       */
       const imagePrompt = buildImagePrompt(
         scoreResult.result,
         content,
         gender as Gender
       );
 
-      /*
-       * Generate personalized movie poster.
-       */
+      if (!imagePrompt.trim()) {
+        throw new Error('Failed to build image prompt');
+      }
+
       const imageBytes = await generateImage(
         env.AI,
         imagePrompt
       );
 
-      // Store generated image in R2
+      if (!imageBytes || imageBytes.length === 0) {
+        throw new Error('AI image generation returned empty image data');
+      }
+
       const objectKey = await storeImageInR2(
         env.IMAGES,
         resultId,
         imageBytes
       );
 
+      if (!objectKey || typeof objectKey !== 'string') {
+        throw new Error('Failed to store generated image');
+      }
+
       const imageUrl = buildImageUrl(resultId);
       const shareImageUrl = imageUrl;
 
-      // Save result to D1
       await saveResult(env.DB, {
         id: resultId,
         quizId: quiz.id,
         resultKey: scoreResult.resultKey,
         scorePercentage: scoreResult.scorePercentage,
         content,
+        imagePrompt,
         imageObjectKey: objectKey,
         imageUrl,
         shareImageUrl
       });
 
-      // Count successful generation against quota
       await incrementQuota(
         env.DB,
         identifier
@@ -224,6 +216,11 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (
     } catch (err) {
       attempts++;
 
+      console.error(
+        `Result generation attempt ${attempts} failed:`,
+        err
+      );
+
       if (attempts >= 5) {
         const message =
           err instanceof Error
@@ -233,10 +230,8 @@ export const onRequestPost: PagesFunction<CloudflareEnv> = async (
         return jsonError(500, message);
       }
 
-      // Generate a new ID for the next attempt
       resultId = generateResultId();
 
-      // Short retry delay
       await new Promise((resolve) =>
         setTimeout(resolve, 1000)
       );
