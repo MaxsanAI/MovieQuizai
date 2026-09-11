@@ -24,7 +24,7 @@ export const sciFiCharacterQuiz: Quiz = {
       weights: {
         a1: { 'leia-organa': 3, 'james-t-kirk': 2 },
         a2: { 'rick-deckard': 3, 'ellen-ripley': 2 },
-        a3: { 'spock': 3, 'dr-grant': 2 },
+        a3: { spock: 3, 'dr-grant': 2 },
         a4: { 'james-t-kirk': 3, 'doctor-who': 2 },
       },
     },
@@ -38,7 +38,7 @@ export const sciFiCharacterQuiz: Quiz = {
         { id: 'a4', text: 'I see it as a potential equal.' },
       ],
       weights: {
-        a1: { 'rick-deckard': 3, 'spock': 2 },
+        a1: { 'rick-deckard': 3, spock: 2 },
         a2: { 'dr-grant': 3, 'doctor-who': 2 },
         a3: { 'ellen-ripley': 3, 'leia-organa': 2 },
         a4: { 'doctor-who': 3, 'james-t-kirk': 2 },
@@ -54,7 +54,7 @@ export const sciFiCharacterQuiz: Quiz = {
         { id: 'a4', text: 'I embrace it as part of the adventure.' },
       ],
       weights: {
-        a1: { 'spock': 3, 'dr-grant': 2 },
+        a1: { spock: 3, 'dr-grant': 2 },
         a2: { 'james-t-kirk': 3, 'doctor-who': 2 },
         a3: { 'ellen-ripley': 3, 'rick-deckard': 2 },
         a4: { 'doctor-who': 3, 'leia-organa': 2 },
@@ -70,7 +70,7 @@ export const sciFiCharacterQuiz: Quiz = {
         { id: 'a4', text: 'Finding a creative solution nobody expected.' },
       ],
       weights: {
-        a1: { 'spock': 3, 'rick-deckard': 2 },
+        a1: { spock: 3, 'rick-deckard': 2 },
         a2: { 'james-t-kirk': 3, 'leia-organa': 2 },
         a3: { 'ellen-ripley': 3, 'leia-organa': 2, 'dr-grant': 1 },
         a4: { 'doctor-who': 3, 'dr-grant': 2 },
@@ -88,7 +88,7 @@ export const sciFiCharacterQuiz: Quiz = {
       weights: {
         a1: { 'james-t-kirk': 3, 'leia-organa': 3 },
         a2: { 'rick-deckard': 3, 'doctor-who': 2 },
-        a3: { 'ellen-ripley': 3, 'spock': 2 },
+        a3: { 'ellen-ripley': 3, spock: 2 },
         a4: { 'doctor-who': 3, 'dr-grant': 1 },
       },
     },
@@ -103,9 +103,9 @@ export const sciFiCharacterQuiz: Quiz = {
       ],
       weights: {
         a1: { 'james-t-kirk': 3, 'leia-organa': 2, 'ellen-ripley': 2 },
-        a2: { 'spock': 3, 'dr-grant': 2 },
+        a2: { spock: 3, 'dr-grant': 2 },
         a3: { 'rick-deckard': 3, 'ellen-ripley': 2 },
-        a4: { 'doctor-who': 3, 'spock': 1 },
+        a4: { 'doctor-who': 3, spock: 1 },
       },
     },
     {
@@ -118,7 +118,7 @@ export const sciFiCharacterQuiz: Quiz = {
         { id: 'a4', text: 'A reliable freighter that gets the job done.' },
       ],
       weights: {
-        a1: { 'james-t-kirk': 3, 'spock': 2 },
+        a1: { 'james-t-kirk': 3, spock: 2 },
         a2: { 'leia-organa': 3, 'ellen-ripley': 2 },
         a3: { 'doctor-who': 3 },
         a4: { 'ellen-ripley': 3, 'rick-deckard': 2 },
@@ -135,7 +135,7 @@ export const sciFiCharacterQuiz: Quiz = {
       ],
       weights: {
         a1: { 'leia-organa': 3, 'doctor-who': 2 },
-        a2: { 'spock': 3, 'dr-grant': 2 },
+        a2: { spock: 3, 'dr-grant': 2 },
         a3: { 'rick-deckard': 3, 'ellen-ripley': 3 },
         a4: { 'doctor-who': 3, 'james-t-kirk': 2 },
       },
@@ -151,9 +151,9 @@ export const sciFiCharacterQuiz: Quiz = {
       ],
       weights: {
         a1: { 'ellen-ripley': 3, 'leia-organa': 2 },
-        a2: { 'spock': 3, 'dr-grant': 2 },
+        a2: { spock: 3, 'dr-grant': 2 },
         a3: { 'james-t-kirk': 3, 'rick-deckard': 2 },
-        a4: { 'doctor-who': 3, 'spock': 1 },
+        a4: { 'doctor-who': 3, spock: 1 },
       },
     },
     {
@@ -166,7 +166,7 @@ export const sciFiCharacterQuiz: Quiz = {
         { id: 'a4', text: 'I bend time to find another way.' },
       ],
       weights: {
-        a1: { 'spock': 3, 'dr-grant': 3 },
+        a1: { spock: 3, 'dr-grant': 3 },
         a2: { 'james-t-kirk': 3, 'leia-organa': 3, 'ellen-ripley': 2 },
         a3: { 'rick-deckard': 3, 'ellen-ripley': 2 },
         a4: { 'doctor-who': 3, 'james-t-kirk': 1 },
@@ -187,7 +187,7 @@ export const sciFiCharacterQuiz: Quiz = {
       humorousObservation:
         'You have strangulated a crime lord with the very chain that bound you. Power move.',
       imagePromptBase:
-        'A determined woman in rebel military gear, space station corridor, stars visible through viewport, sci-fi aesthetic, cinematic dramatic portrait',
+        'EXACT CHARACTER: Leia Organa as portrayed by Carrie Fisher in the original Star Wars trilogy, especially Star Wars: A New Hope (1977), The Empire Strikes Back (1980), and Return of the Jedi (1983). One person only. Adult white woman in her 20s, recognizable Carrie Fisher facial features, expressive brown eyes, defined eyebrows, oval face, dark brown hair styled in Leia’s iconic braided side buns or classic braided updo. She is Princess Leia, not a generic female rebel. Authentic Star Wars costume styling such as her white flowing gown, white turtleneck dress, or practical rebel military outfit depending on the scene. Confident, intelligent, determined expression. Cinematic Star Wars production design, believable spaceship interior or rebel base, subtle space background. Photorealistic cinematic portrait, highly recognizable character likeness. No other people, no generic woman, no random actress, no invented character, no modern clothing.',
     },
     {
       key: 'spock',
@@ -202,7 +202,7 @@ export const sciFiCharacterQuiz: Quiz = {
       humorousObservation:
         'You have said "fascinating" during events that were absolutely terrifying.',
       imagePromptBase:
-        'A composed figure in a science officer uniform, futuristic bridge, blue lights and screens, sci-fi aesthetic, cinematic dramatic portrait',
+        'EXACT CHARACTER: Spock as portrayed by Leonard Nimoy in the original Star Trek television and film continuity, especially Star Trek: The Motion Picture (1979) and Star Trek II: The Wrath of Khan (1982). One person only. Adult male Vulcan with unmistakable Leonard Nimoy facial features, pale complexion, dark straight neatly styled hair, sharply arched Vulcan eyebrows, pointed ears, narrow angular face and calm controlled expression. Wearing an authentic classic Starfleet science officer uniform, preferably the blue science division uniform from the original-era films. Vulcan identity must be obvious. Inside the authentic USS Enterprise bridge or science environment, subtle futuristic instrumentation. Photorealistic cinematic portrait, recognizable Leonard Nimoy Spock likeness, serious intelligent expression. No other people, no generic man, no random actor, no modern clothes, no human ears, no invented character.',
     },
     {
       key: 'james-t-kirk',
@@ -217,7 +217,7 @@ export const sciFiCharacterQuiz: Quiz = {
       humorousObservation:
         'You have punched a problem and it worked. Multiple times.',
       imagePromptBase:
-        'A confident captain on a starship bridge, stars through the viewscreen, golden light, sci-fi aesthetic, cinematic heroic portrait',
+        'EXACT CHARACTER: Captain James T. Kirk as portrayed by William Shatner in the original Star Trek television series and classic Star Trek films. One person only. Adult white man in his 30s-40s, unmistakable William Shatner facial features, strong square jaw, broad face, blue eyes, thick dark brown hair with characteristic swept-back styling, confident charismatic expression. Wearing an authentic original-era Starfleet command uniform with the gold command color and black collar. Captain Kirk, not Chris Pine’s reboot version. Standing on the classic USS Enterprise bridge with authentic 1960s Star Trek control panels and viewscreen, cinematic space visible outside. Photorealistic cinematic portrait, heroic but believable. No other people, no generic captain, no random actor, no modern uniform, no Chris Pine version, no invented character.',
     },
     {
       key: 'ellen-ripley',
@@ -232,7 +232,7 @@ export const sciFiCharacterQuiz: Quiz = {
       humorousObservation:
         'You have been asked to deal with the alien and frankly, you are over it.',
       imagePromptBase:
-        'A woman in a utilitarian spacesuit, dark spaceship corridor, steam and warning lights, sci-fi horror aesthetic, cinematic dramatic portrait',
+        'EXACT CHARACTER: Ellen Ripley as portrayed by Sigourney Weaver in Alien (1979) and Aliens (1986). One woman only. Adult white woman in her 30s, unmistakable Sigourney Weaver facial features, tall athletic build, strong angular oval face, brown eyes, dark brown shoulder-length hair, practical natural appearance. She is Ellen Ripley, not a generic female space marine. Authentic Nostromo-era industrial jumpsuit or Aliens-era military utility clothing, depending on the scene. Practical determined expression, visibly capable and alert. Dark industrial spaceship corridor inspired by the Nostromo, exposed machinery, steam, warning lights and gritty 1970s sci-fi production design. Photorealistic cinematic portrait, highly recognizable Sigourney Weaver Ripley likeness. No other people, no Xenomorph dominating the frame, no generic woman, no random actress, no futuristic fashion, no invented character.',
     },
     {
       key: 'rick-deckard',
@@ -247,7 +247,7 @@ export const sciFiCharacterQuiz: Quiz = {
       humorousObservation:
         'You have questioned your own humanity more than once and still made it to work on time.',
       imagePromptBase:
-        'A trench-coated figure in a neon-lit rainy city, reflections on wet pavement, cyberpunk aesthetic, cinematic noir portrait, moody blue and pink tones',
+        'EXACT CHARACTER: Rick Deckard as portrayed by Harrison Ford in Blade Runner (1982), the original Ridley Scott film. One person only. Adult white man in his early 40s, unmistakable Harrison Ford facial features, strong masculine jaw, brown eyes, dark brown medium-length hair, tired slightly rugged face with subtle stubble. Wearing Deckard’s authentic 1982 Blade Runner detective clothing: heavy weathered brown/tan trench coat over a shirt and tie, practical noir detective wardrobe. Moody exhausted expression. Rain-soaked Los Angeles 2019-inspired cyberpunk street, neon signs, steam, wet pavement, deep atmospheric shadows and classic Blade Runner production design. He is Rick Deckard, not Ryan Gosling and not a generic cyberpunk detective. Photorealistic cinematic portrait, recognizable Harrison Ford likeness. No other people, no random actor, no modern clothing, no invented character.',
     },
     {
       key: 'doctor-who',
@@ -262,7 +262,7 @@ export const sciFiCharacterQuiz: Quiz = {
       humorousObservation:
         'You have saved the universe with a screwdriver and a monologue. Several times.',
       imagePromptBase:
-        'An eccentric figure in a long coat, blue police box, starry nebula background, sci-fi fantasy aesthetic, cinematic dramatic portrait',
+        'EXACT CHARACTER: The Doctor as portrayed by David Tennant in Doctor Who, specifically the Tenth Doctor era (2005-2010). One person only. Adult white British man in his 30s, unmistakable David Tennant facial features, slim tall build, narrow expressive face, brown eyes, distinctive dark brown tousled hair with a slightly swept-up style. Wearing the authentic Tenth Doctor outfit: long dark brown pinstripe suit, brown or dark red tie, long brown trench coat, and Converse-style sneakers. Holding a sonic screwdriver. Energetic, eccentric, intelligent expression. The blue TARDIS police box can appear in the distant background but must not obscure the character. Cinematic time-and-space atmosphere, subtle stars and blue light. Photorealistic cinematic portrait, recognizable David Tennant likeness. No other people, no generic time traveler, no other Doctor incarnation, no Matt Smith, no Peter Capaldi, no invented character.',
     },
     {
       key: 'dr-grant',
@@ -277,7 +277,7 @@ export const sciFiCharacterQuiz: Quiz = {
       humorousObservation:
         'You have been chased by something extinct and still took notes.',
       imagePromptBase:
-        'A woman in field gear studying prehistoric flora, jungle environment, dramatic sunlight through canopy, sci-fi adventure aesthetic, cinematic portrait',
+        'EXACT CHARACTER: Dr. Ellie Sattler as portrayed by Laura Dern in Jurassic Park (1993). One woman only. Adult white woman in her 30s, unmistakable Laura Dern facial features, expressive blue eyes, fair complexion, defined cheekbones, shoulder-length light blonde hair with natural volume. She is Dr. Ellie Sattler, paleobotanist, not a generic female scientist. Authentic Jurassic Park 1993 field outfit: fitted pale pink or light-colored shirt, khaki field pants, practical boots, natural expedition styling. Intelligent but alert expression. Isla Nublar tropical jungle environment with recognizable Jurassic Park expedition atmosphere, prehistoric plants and dramatic natural light. A subtle hint of dinosaur-related danger may appear far in the background, but Ellie remains the sole person and clear focus. Photorealistic cinematic portrait, recognizable Laura Dern likeness. No other people, no generic scientist, no random actress, no laboratory coat, no modern clothing, no invented character.',
     },
   ],
 };
