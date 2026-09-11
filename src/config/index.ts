@@ -1,9 +1,10 @@
+```ts
 export const SITE_CONFIG = {
   name: 'MovieQuiz',
   tagline: 'Meet your cinematic alter ego',
   description:
     'Take a movie personality quiz and discover your cinematic alter ego. Get a unique AI-generated movie poster and share your result.',
-  url: 'https://moviequiz.example',
+  url: 'https://moviequizaii.pages.dev',
   themeColor: '#0a0a0f',
   ogImage: '/og-default.svg',
 };
@@ -36,12 +37,15 @@ export function generateResultId(): string {
   const alphabet = RESULT_ID_ALPHABET;
   const length = RESULT_ID_LENGTH;
   let id = '';
+
   for (let i = 0; i < length; i++) {
     id += alphabet[Math.floor(Math.random() * alphabet.length)];
   }
+
   return id;
 }
 
 export function isValidResultId(id: string): boolean {
   return /^[a-z0-9]{10}$/.test(id);
 }
+```
