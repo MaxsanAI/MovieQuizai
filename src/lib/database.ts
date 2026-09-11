@@ -3,6 +3,11 @@
 import { SITE_CONFIG } from '../config';
 import type { ResultRow, GeneratedResultContent } from '../types';
 
+type GeneratedResultContentWithoutImagePrompt = Omit<
+  GeneratedResultContent,
+  'imagePrompt'
+>;
+
 export async function saveResult(
   db: D1Database,
   params: {
@@ -10,12 +15,37 @@ export async function saveResult(
     quizId: string;
     resultKey: string;
     scorePercentage: number;
-    content: GeneratedResultContent;
+    content: GeneratedResultContentWithoutImagePrompt;
+    imagePrompt: string;
     imageObjectKey: string;
     imageUrl: string;
     shareImageUrl: string;
   }
 ): Promise<void> {
+  if (!params.id.trim()) {
+    throw new Error('Result ID is required');
+  }
+
+  if (!params.quizId.trim()) {
+    throw new Error('Quiz ID is required');
+  }
+
+  if (!params.resultKey.trim()) {
+    throw new Error('Result key is required');
+  }
+
+  if (!params.imagePrompt.trim()) {
+    throw new Error('Image prompt is required');
+  }
+
+  if (!params.imageUrl.trim()) {
+    throw new Error('Image URL is required');
+  }
+
+  if (!params.shareImageUrl.trim()) {
+    throw new Error('Share image URL is required');
+  }
+
   const now = new Date().toISOString();
 
   await db
@@ -52,7 +82,7 @@ export async function saveResult(
       params.content.movieEnergy,
       params.content.humorousObservation,
       params.content.shareCaption,
-      params.content.imagePrompt,
+      params.imagePrompt,
       params.imageUrl,
       params.shareImageUrl,
       now
@@ -64,6 +94,10 @@ export async function getResultById(
   db: D1Database,
   id: string
 ): Promise<ResultRow | null> {
+  if (!id.trim()) {
+    return null;
+  }
+
   return db
     .prepare('SELECT * FROM results WHERE id = ?')
     .bind(id)
