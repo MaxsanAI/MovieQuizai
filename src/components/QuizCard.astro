@@ -8,19 +8,45 @@ interface Props {
 const { quiz } = Astro.props;
 ---
 
-<a href={`/quiz/${quiz.slug}`} class="quiz-card" style={`--accent: ${quiz.accentColor}; --gradient: ${quiz.gradient}`}>
+<a
+  href={`/quiz/${quiz.slug}`}
+  class="quiz-card"
+  style={`--accent: ${quiz.accentColor}; --gradient: ${quiz.gradient}`}
+>
   <div class="card-glow"></div>
+
   <div class="card-content">
     <span class="card-emoji">{quiz.emoji}</span>
-    <h3 class="card-title">{quiz.title}</h3>
-    <p class="card-subtitle">{quiz.subtitle}</p>
-    <div class="card-meta">
-      <span class="card-questions">{quiz.questions.length} questions</span>
-      <span class="card-results">{quiz.results.length} results</span>
+
+    <div class="card-category">
+      {quiz.category}
     </div>
+
+    <h3 class="card-title">{quiz.title}</h3>
+
+    <p class="card-subtitle">{quiz.subtitle}</p>
+
+    <div class="card-meta">
+      <span class="card-questions">
+        {quiz.questions.length} questions
+      </span>
+
+      <span class="card-results">
+        {quiz.results.length} results
+      </span>
+    </div>
+
     <div class="card-cta">
       <span>Take Quiz</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
         <path d="M5 12h14M12 5l7 7-7 7" />
       </svg>
     </div>
@@ -35,14 +61,23 @@ const { quiz } = Astro.props;
     overflow: hidden;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+    transition:
+      transform var(--transition),
+      border-color var(--transition),
+      box-shadow var(--transition);
     cursor: pointer;
   }
 
   .quiz-card:hover {
     transform: translateY(-4px);
     border-color: var(--accent);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px color-mix(in srgb, var(--accent) 20%, transparent);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 0 20px color-mix(
+        in srgb,
+        var(--accent) 20%,
+        transparent
+      );
   }
 
   .card-glow {
@@ -69,6 +104,29 @@ const { quiz } = Astro.props;
     font-size: 2rem;
     display: block;
     margin-bottom: 12px;
+  }
+
+  .card-category {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 4px 10px;
+    border: 1px solid color-mix(
+      in srgb,
+      var(--accent) 35%,
+      transparent
+    );
+    border-radius: 999px;
+    color: var(--accent);
+    background: color-mix(
+      in srgb,
+      var(--accent) 10%,
+      transparent
+    );
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
   .card-title {
