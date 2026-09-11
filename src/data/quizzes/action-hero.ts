@@ -187,7 +187,7 @@ export const actionHeroQuiz: Quiz = {
       humorousObservation:
         "You've walked barefoot on glass and still complained about your day job.",
       imagePromptBase:
-        'A battered man in a dirty tank top, shattered glass, industrial setting, explosion glow, action movie aesthetic, cinematic dramatic lighting',
+        'Create the exact character John McClane as portrayed by Bruce Willis in Die Hard (1988). Adult white American male, late 30s, rugged average-athletic build, recognizable Bruce Willis facial structure, square jaw, blue eyes, very short dark brown hair, light stubble. He wears the iconic dirty white sleeveless undershirt, dark trousers and a shoulder holster, visibly battered and blood-stained after the Nakatomi Plaza events. 1980s Los Angeles skyscraper interior, broken glass and industrial debris. ONE PERSON ONLY. Exact John McClane appearance, not a generic action hero, not another actor, not an invented character, no extra people.',
     },
     {
       key: 'ripley',
@@ -197,12 +197,12 @@ export const actionHeroQuiz: Quiz = {
         'You face the unimaginable with practical intelligence and raw courage. When everyone panics, you get the job done.',
       traits: ['Brave', 'Practical', 'Resilient', 'Level-headed'],
       strength: 'You stay calm and think clearly under extreme pressure',
-      weakness: 'You carry trauma from things most people can\u2019t imagine',
+      weakness: 'You carry trauma from things most people can\\u2019t imagine',
       movieEnergy: 'Sci-fi survival with a flamethrower',
       humorousObservation:
         "You've been asked to deal with the alien situation and frankly, you're over it.",
       imagePromptBase:
-        'A woman in a utilitarian spacesuit, dark spaceship corridor, steam and warning lights, sci-fi horror aesthetic, cinematic dramatic portrait',
+        'Create the exact character Ellen Ripley as portrayed by Sigourney Weaver in Alien (1979) and Aliens (1986). Adult white woman in her 30s, tall athletic build, angular oval face, brown eyes, shoulder-length dark brown hair, natural appearance. Authentic Nostromo/Aliens-era utilitarian clothing: white or light work shirt, dark trousers, practical boots, rugged industrial gear, optionally carrying the iconic flamethrower. Gritty industrial spaceship corridor with steam and warning lights. ONE WOMAN ONLY. Exact Ellen Ripley appearance, not a generic sci-fi woman, not another actress, no other people, no invented character.',
     },
     {
       key: 'ethan-hunt',
@@ -217,7 +217,7 @@ export const actionHeroQuiz: Quiz = {
       humorousObservation:
         "You've dangled from things no insurance company would ever approve.",
       imagePromptBase:
-        'A man in tactical gear suspended in a high-tech vault, laser grids, blue light, spy thriller aesthetic, cinematic action portrait',
+        'Create the exact character Ethan Hunt as portrayed by Tom Cruise in the Mission: Impossible film series. Adult white American male, athletic compact build, recognizable Tom Cruise facial structure, brown eyes, short dark brown hair, clean-shaven or subtle stubble. Authentic Ethan Hunt tactical/spy clothing, fitted dark shirt or black tactical outfit, practical harness or mission gear. High-tech vault or dangerous espionage environment with laser security grids. ONE MAN ONLY. Exact Ethan Hunt appearance, not a generic secret agent, not another actor, not James Bond, no extra people, no invented character.',
     },
     {
       key: 'furiosa',
@@ -232,7 +232,7 @@ export const actionHeroQuiz: Quiz = {
       humorousObservation:
         "You've driven through a desert warzone and called it Tuesday.",
       imagePromptBase:
-        'A fierce woman with a mechanical arm in a war rig, desert wasteland, dust storm, post-apocalyptic aesthetic, cinematic action portrait',
+        'Create the exact character Imperator Furiosa as portrayed by Charlize Theron in Mad Max: Fury Road (2015). Adult white woman, shaved head, athletic muscular build, pale dusty skin, intense blue-gray eyes, strong angular face, dark dirt and grease across forehead and face. She has her distinctive mechanical prosthetic left arm. Authentic Fury Road clothing: worn dark leather, rugged combat gear, dusty post-apocalyptic clothing. Vast orange desert wasteland, War Rig atmosphere, dust storm and harsh sunlight. ONE WOMAN ONLY. Exact Furiosa appearance, not a generic warrior, not another actress, no extra people, no invented character.',
     },
     {
       key: 'neo',
@@ -247,7 +247,7 @@ export const actionHeroQuiz: Quiz = {
       humorousObservation:
         "You've dodged bullets and still been late to meetings.",
       imagePromptBase:
-        'A figure in a black coat dodging bullets in slow motion, raining green code, urban rooftop, sci-fi action aesthetic, cinematic dramatic portrait',
+        'Create the exact character Neo as portrayed by Keanu Reeves in The Matrix (1999). Adult white male around 30, tall slim-athletic build, pale skin, angular oval face, brown eyes, straight dark brown medium-length hair. Authentic black Matrix outfit: long black leather coat, black shirt, black trousers, black boots and narrow black sunglasses. Subtle green Matrix code atmosphere and dark urban setting. ONE MAN ONLY. Exact Neo appearance from the 1999 film, not a generic cyberpunk man, not another actor, no Trinity, no other people, no invented character.',
     },
     {
       key: 'beatrix-kiddo',
@@ -262,14 +262,14 @@ export const actionHeroQuiz: Quiz = {
       humorousObservation:
         "You've made a list and checked it twice, but not in the fun holiday way.",
       imagePromptBase:
-        'A woman in a yellow tracksuit with a katana, snowy Japanese garden, blood and cherry blossoms, martial arts film aesthetic, cinematic portrait',
+        'Create the exact character Beatrix Kiddo as portrayed by Uma Thurman in Kill Bill Vol. 1 and Vol. 2 (2003-2004). Adult white woman in her 30s, tall athletic build, pale skin, blue eyes, blonde hair styled according to the Kill Bill era. Iconic yellow Bruce Lee-inspired tracksuit with black stripes and matching athletic shoes, holding her distinctive Hattori Hanzo katana. Japanese dojo or snowy Japanese garden atmosphere, cinematic martial-arts lighting. ONE WOMAN ONLY. Exact Beatrix Kiddo appearance, not a generic female fighter, not another actress, no extra people, no invented character.',
     },
     {
       key: 'mad-max',
       name: 'Max Rockatansky',
       archetype: 'The Wasteland Drifter',
       description:
-        'You survive because you have to, not because you want to. You want to be left alone, but the world won\u2019t allow it.',
+        'You survive because you have to, not because you want to. You want to be left alone, but the world won\\u2019t allow it.',
       traits: ['Self-reliant', 'Tough', 'Reluctant', 'Survivor'],
       strength: 'You survive when survival seems impossible',
       weakness: 'You push people away to protect them',
@@ -277,7 +277,7 @@ export const actionHeroQuiz: Quiz = {
       humorousObservation:
         'You just want to be left alone and somehow that makes you the protagonist.',
       imagePromptBase:
-        'A weathered man in leather in a desert wasteland, modified vehicle, dust and fire, post-apocalyptic aesthetic, cinematic action portrait',
+        'Create the exact character Max Rockatansky as portrayed by Tom Hardy in Mad Max: Fury Road (2015). Adult white Australian male, early 30s, lean muscular build, weathered face, blue-gray eyes, short dark brown hair, rugged beard stubble. Authentic Max clothing: battered black leather jacket, dark trousers, worn boots, improvised restraints and survival gear. His face and clothing are dusty and battle-worn. Vast Fury Road desert wasteland with his iconic black Interceptor or rugged war vehicle nearby. ONE MAN ONLY. Exact Max Rockatansky appearance from Fury Road, not Mel Gibson, not a generic post-apocalyptic man, no extra people, no invented character.',
     },
     {
       key: 'sarah-connor',
@@ -292,7 +292,7 @@ export const actionHeroQuiz: Quiz = {
       humorousObservation:
         "You've been called crazy for predicting the apocalypse and then the apocalypse showed up.",
       imagePromptBase:
-        'A muscular woman doing pull-ups in a psychiatric ward, dim lighting, determination, sci-fi action aesthetic, cinematic dramatic portrait',
+        'Create the exact character Sarah Connor as portrayed by Linda Hamilton in Terminator 2: Judgment Day (1991). Adult white woman in her early 30s, athletic muscular physique, strong angular face, blue eyes, dark brown curly shoulder-length hair. Authentic T2 Sarah Connor appearance: black tank top, dark tactical clothing, combat boots, muscular arms and determined expression, practical weapons and survival gear. Gritty industrial or psychiatric-facility environment with dramatic cinematic lighting. ONE WOMAN ONLY. Exact Sarah Connor appearance from Terminator 2, not a generic female soldier, not another actress, no extra people, no invented character.',
     },
   ],
 };
