@@ -63,6 +63,9 @@ Create a personalized movie-character quiz result.
 QUIZ:
 ${quiz.title}
 
+QUIZ CATEGORY:
+${quiz.category}
+
 CHARACTER:
 ${result.name}
 
@@ -132,6 +135,15 @@ Rules:
 `;
 }
 
+function normalizeString(
+  value: unknown,
+  fallback: string
+): string {
+  return typeof value === 'string' && value.trim()
+    ? value.trim()
+    : fallback;
+}
+
 export async function generateTextContent(
   ai: Ai,
   quiz: Quiz,
@@ -188,7 +200,13 @@ export async function generateTextContent(
     const parsed = JSON.parse(cleaned);
 
     const safeTraits = Array.isArray(parsed.traits)
-      ? parsed.traits.map(String).slice(0, 5)
+      ? parsed.traits
+          .filter(
+            (trait: unknown): trait is string =>
+              typeof trait === 'string' && trait.trim().length > 0
+          )
+          .map((trait: string) => trait.trim())
+          .slice(0, 5)
       : [];
 
     while (safeTraits.length < 5) {
@@ -196,45 +214,48 @@ export async function generateTextContent(
     }
 
     return {
-      resultTitle:
-        typeof parsed.resultTitle === 'string'
-          ? parsed.resultTitle
-          : result.name,
+      resultTitle: normalizeString(
+        parsed.resultTitle,
+        result.name
+      ),
 
-      description:
-        typeof parsed.description === 'string'
-          ? parsed.description
-          : result.description,
+      description: normalizeString(
+        parsed.description,
+        result.description
+      ),
 
       traits: safeTraits,
 
-      strength:
-        typeof parsed.strength === 'string'
-          ? parsed.strength
-          : 'Strong personality',
+      strength: normalizeString(
+        parsed.strength,
+        'Strong personality'
+      ),
 
-      weakness:
-        typeof parsed.weakness === 'string'
-          ? parsed.weakness
-          : 'Can be unpredictable',
+      weakness: normalizeString(
+        parsed.weakness,
+        'Can be unpredictable'
+      ),
 
-      movieEnergy:
-        typeof parsed.movieEnergy === 'string'
-          ? parsed.movieEnergy
-          : 'Cinematic energy',
+      movieEnergy: normalizeString(
+        parsed.movieEnergy,
+        'Cinematic energy'
+      ),
 
-      humorousObservation:
-        typeof parsed.humorousObservation === 'string'
-          ? parsed.humorousObservation
-          : 'You would definitely make this movie more interesting.',
+      humorousObservation: normalizeString(
+        parsed.humorousObservation,
+        'You would definitely make this movie more interesting.'
+      ),
 
-      shareCaption:
-        typeof parsed.shareCaption === 'string'
-          ? parsed.shareCaption
-          : `I got ${result.name} on MovieQuiz!`,
+      shareCaption: normalizeString(
+        parsed.shareCaption,
+        `I got ${result.name} on MovieQuiz!`
+      ),
     };
   } catch (error) {
-    console.error('AI text generation failed:', error);
+    console.error(
+      'AI text generation failed:',
+      error
+    );
 
     return {
       resultTitle: result.name,
@@ -354,6 +375,12 @@ export async function generateImage(
   ai: Ai,
   prompt: string
 ): Promise<Uint8Array> {
+  if (!prompt.trim()) {
+    throw new Error(
+      'Image generation prompt is required'
+    );
+  }
+
   const response = await ai.run(
     AI_CONFIG.imageModel as any,
     {
